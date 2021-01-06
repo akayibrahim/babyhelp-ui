@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
+import { AsyncStorage } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -57,13 +58,21 @@ function TabOneNavigator() {
   useEffect(() => {    
     const options = { method: "GET", headers: { Accept: 'application/json', 'Content-Type': 'application/json'}};
     const getWeeks = async () => {
-      fetch('http://localhost:4001/api/v1/week', options).then((response) => response.json()).then((json) => 
-      json.response).then((data) => {
-        var week = data[0];
-        setWeek(week.weeks);
-      }).catch((error) => {
-          console.error(error);
-      });
+      try {
+        await AsyncStorage.getItem('id').then((value) => {
+          if (value !== null && JSON.parse(value) != null) {
+            fetch('http://localhost:4001/api/v1/week?id='+JSON.parse(value), options).then((response) => response.json()).then((json) => 
+            json.response).then((data) => {
+              var week = data[0];
+              setWeek(week.weeks);
+            }).catch((error) => {
+                console.error(error);
+            });     
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
     getWeeks();
   }, []);

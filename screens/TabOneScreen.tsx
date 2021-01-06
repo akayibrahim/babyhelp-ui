@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, AsyncStorage} from 'react-native';
 
 import { View } from '../components/Themed';
 import Activity from '../components/Activity';
@@ -18,13 +18,21 @@ export default function TabOneScreen() {
   useEffect(() => {    
     const options = { method: "GET", headers: { Accept: 'application/json', 'Content-Type': 'application/json'}};
     const getHelps = async () => {
-      fetch('http://localhost:4001/api/v1/helps', options).then((response) => response.json()).then((json) => {
-        var jsonStr = JSON.stringify(json);
-        //console.log(jsonStr);
-        setHelps(jsonStr);      
-      }).catch((error) => {
-          console.error(error);
-      });
+      try {
+        await AsyncStorage.getItem('id').then((value) => {
+          if (value !== null && JSON.parse(value) != null) {
+            fetch('http://localhost:4001/api/v1/helps?id='+JSON.parse(value), options).then((response) => response.json()).then((json) => {
+              var jsonStr = JSON.stringify(json);
+              // console.log(jsonStr);
+              setHelps(jsonStr);
+            }).catch((error) => {
+              console.error(error);
+            });
+            }
+        });
+      } catch (e) {
+        console.error(e);
+      }      
     }
     getHelps();
   }, []);

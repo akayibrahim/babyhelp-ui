@@ -2,13 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Alert} from 'react-native';
 
 import { View } from '../components/Themed';
+import SwitchSelector from "react-native-switch-selector";
 
 export default function RegisterScreen(props: any) {
   const [email, setEmail] = useState();
   const [sex, setSex] = useState();
   const [name, setName] = useState();
   const [birthDate, setBirthDate] = useState();
+  const [language, setLangauge] = useState();
   const {updateMode} = props;
+
+  const options = [
+    { label: "MALE", value: "MALE" },
+    { label: "FEMALE", value: "FEMALE" }
+  ];
+
+  const optionsLang = [
+    { label: "EN", value: "EN" },
+    { label: "TR", value: "TR" }
+  ];
 
   const registerOrUpdate = async () => {
     if (updateMode != null && updateMode === "true") {
@@ -23,7 +35,7 @@ export default function RegisterScreen(props: any) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, sex, name, birthDate })
-  };
+    };
     fetch('http://localhost:4001/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {
       storeData(data.response.insertId);
       props.navigation.replace('Root');
@@ -81,7 +93,7 @@ export default function RegisterScreen(props: any) {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        await AsyncStorage.getItem('id').then((value) => {          
+        await AsyncStorage.getItem('id').then((value) => {
           if (value !== null && JSON.parse(value) != null) {
             fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
               json.response).then((data) => {                
@@ -122,19 +134,26 @@ export default function RegisterScreen(props: any) {
           placeholderTextColor={color}
           onChangeText={val => setName(val)}
         />
-        <TextInput
-          style={styles.input}
-          placeholder={updateMode === "true" ? sex : 'Sex'}
-          autoCapitalize="none"
-          placeholderTextColor={color}
-          onChangeText={val => setSex(val)}
-        />
+        <SwitchSelector
+          options={options}
+          textColor={color}
+          buttonColor={color}          
+          initial={0}
+          onPress={val => setSex(val)}
+        />        
         <TextInput
           style={styles.input}
           placeholder={updateMode === "true" ? birthDate : 'Birth Date'}
           autoCapitalize="none"
           placeholderTextColor={color}
           onChangeText={val => setBirthDate(val)}
+        />
+        <SwitchSelector
+          options={optionsLang}
+          textColor={color}
+          buttonColor={color}
+          initial={0}
+          onPress={val => setLangauge(val)}
         />
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: 170, height: 40, borderRadius: 8, top: '1%' }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? 'Update' : 'Register'}</Text>
