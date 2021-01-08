@@ -13,6 +13,8 @@ export default function TabTwoScreen(props:any) {
   const [name, setName] = useState();
   const [sex, setSex] = useState();
   const [birthDate, setBirdthDate] = useState();
+  const [language, setLangauge] = useState();
+  const [email, setEmail] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -29,7 +31,9 @@ export default function TabTwoScreen(props:any) {
                 var usr = data[0];
                 setName(usr.name);
                 setSex(usr.sex);
-                setBirdthDate(usr.birthDate);      
+                setBirdthDate(usr.birthDate);
+                setLangauge(usr.language);
+                setEmail(usr.email);
             }).catch((error) => {
                 console.error(error);
             });
@@ -49,6 +53,8 @@ export default function TabTwoScreen(props:any) {
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>Sex: </Text>{sex}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>BirthDate: </Text>{birthDate}</Text>
+      <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
+      <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>Language: </Text>{language}</Text>
       <TouchableOpacity onPress={toggleModal}>
         <View style={{ backgroundColor: "#487EB8", width: 170, height: 40, borderRadius: 8, top: 50, }}>
           <Text style={{ fontSize: 20, color: "white", textAlign: 'center', top: 8, }}>Edit</Text>
@@ -68,7 +74,7 @@ export default function TabTwoScreen(props:any) {
               <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={"black"} />
             </View>
           </TouchableOpacity>    
-          <RegisterScreen updateMode={"true"}/>
+          <RegisterScreen updateMode={"true"} emailP={email} sexP={sex} languageP={language} nameP={name} birthDateP={birthDate} />
         </View>
       </Modal>
     </View>

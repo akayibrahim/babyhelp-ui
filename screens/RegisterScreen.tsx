@@ -5,12 +5,12 @@ import { View } from '../components/Themed';
 import SwitchSelector from "react-native-switch-selector";
 
 export default function RegisterScreen(props: any) {
+  const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
   const [email, setEmail] = useState();
   const [sex, setSex] = useState();
   const [name, setName] = useState();
   const [birthDate, setBirthDate] = useState();
   const [language, setLangauge] = useState();
-  const {updateMode} = props;
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -30,11 +30,15 @@ export default function RegisterScreen(props: any) {
     }
   }
 
+  const logout = async () => {
+    AsyncStorage.removeItem('id');
+  }
+
   const register = () => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, sex, name, birthDate })
+      body: JSON.stringify({ email, sex, name, birthDate, language })
     };
     fetch('http://localhost:4001/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {
       storeData(data.response.insertId);
@@ -52,7 +56,7 @@ export default function RegisterScreen(props: any) {
           const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, sex, name, birthDate, id })
+            body: JSON.stringify({ email, sex, name, birthDate, language, id })
           };
           fetch('http://localhost:4001/api/v1/updateUser', requestOptions).then((response) => response.json()).then((data) => {
             Alert.alert("", "Your information was updated!")
@@ -87,33 +91,15 @@ export default function RegisterScreen(props: any) {
   }
 
   useEffect(() => {
-    ifExistAtStoreNavigate();
-  }, []);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        await AsyncStorage.getItem('id').then((value) => {
-          if (value !== null && JSON.parse(value) != null) {
-            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
-              json.response).then((data) => {                
-                var usr = data[0];
-                setEmail(usr.email);
-                setName(usr.name);
-                setSex(usr.sex);
-                setBirthDate(usr.birthDate);
-            }).catch((error) => {
-                console.error(error);
-            });
-          }
-        });
-      } catch (e) {
-        console.error(e);
-      }
+    if (updateMode === "true") {
+      setName(nameP);
+      setSex(sexP);
+      setEmail(emailP);
+      setBirthDate(birthDateP);
+      setLangauge(languageP);      
+    } else {
+      ifExistAtStoreNavigate();
     }
-    if (updateMode != null && updateMode === "true") {
-      getUserInfo();
-    }    
   }, []);
   
   return (    
@@ -137,9 +123,12 @@ export default function RegisterScreen(props: any) {
         <SwitchSelector
           options={options}
           textColor={color}
-          buttonColor={color}          
-          initial={0}
+          buttonColor={color}        
+          initial={sexP === "MALE" ? 0 : 1}
           onPress={val => setSex(val)}
+          hasPadding
+          borderColor={color}
+          style={{width: '83%', height: 50, top: '1%', bottom: '1%'}}
         />        
         <TextInput
           style={styles.input}
@@ -152,12 +141,18 @@ export default function RegisterScreen(props: any) {
           options={optionsLang}
           textColor={color}
           buttonColor={color}
-          initial={0}
+          initial={languageP === "EN" ? 0 : 1}
           onPress={val => setLangauge(val)}
+          hasPadding
+          borderColor={color}
+          style={{width: '83%', height: 50, top: '1%', bottom: '1%'}}
         />
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: 170, height: 40, borderRadius: 8, top: '1%' }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? 'Update' : 'Register'}</Text>
-        </TouchableOpacity>        
+        </TouchableOpacity>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: 170, height: 40, borderRadius: 8, top: '3%' }} onPress={logout}>
+          <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>Logout</Text>
+        </TouchableOpacity>
       </View>
   );
 }

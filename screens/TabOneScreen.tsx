@@ -53,7 +53,7 @@ export default function TabOneScreen() {
 
   return (    
     <View style={styles.container}>    
-      <View style={styles.activities}>      
+      <View style={styles.activities}>
         <ScrollView style={styles.activitiesScroll} showsVerticalScrollIndicator={false}>
             {helps == null ? null : JSON.parse(helps).response.map((item:any, index:number) => 
               <Activity key={index} label={item.label} typeName={item.type} type={getTypeIcon(item.type)} 
