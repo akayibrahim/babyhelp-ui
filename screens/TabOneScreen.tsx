@@ -5,15 +5,9 @@ import { View } from '../components/Themed';
 import Activity from '../components/Activity';
 import activityColor from '../hooks/activityColor';
 
-export default function TabOneScreen() {
-  const [data, setData] = useState([] as any);
+export default function TabOneScreen(props:any) {
   const colorOfActivity = activityColor();
   const [helps, setHelps] = useState();
-
-  useEffect(() => {
-    let result = [0];   
-    setData(result);   
-  }, []);
 
   useEffect(() => {    
     const options = { method: "GET", headers: { Accept: 'application/json', 'Content-Type': 'application/json'}};
@@ -28,7 +22,9 @@ export default function TabOneScreen() {
             }).catch((error) => {
               console.error(error);
             });
-            }
+          } else {
+            props.navigation.replace('Register');
+          }
         });
       } catch (e) {
         console.error(e);

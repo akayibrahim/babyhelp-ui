@@ -54,7 +54,8 @@ function TabOneNavigator() {
   const colorOfHeader = headerColor();
   const colorScheme = useColorScheme();
   const [week, setWeek] = useState();
-  
+  const [name, setName] = useState();
+
   useEffect(() => {    
     const options = { method: "GET", headers: { Accept: 'application/json', 'Content-Type': 'application/json'}};
     const getWeeks = async () => {
@@ -75,6 +76,24 @@ function TabOneNavigator() {
       }
     }
     getWeeks();
+    const getUserInfo = () => {
+      try {
+        AsyncStorage.getItem('id').then((value) => {          
+          if (value !== null && JSON.parse(value) != null) {
+            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
+              json.response).then((data) => {                
+                var usr = data[0];
+                setName(usr.name);
+            }).catch((error) => {
+                console.error(error);
+            });
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }      
+    }
+    getUserInfo();
   }, []);
 
   return (
@@ -83,16 +102,17 @@ function TabOneNavigator() {
         name="TabOneScreen"
         component={TabOneScreen}
         options={{ 
-          headerTitle: 'LUKE', 
+          headerTitle: name,
           headerStyle: {
             // backgroundColor: colorOfHeader,
             elevation: 0, // remove shadow on Android
-            shadowOpacity: 0, // remove shadow on iOS         
+            shadowOpacity: 0, // remove shadow on iOS            
           },
           headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
           headerTitleStyle: {
             // fontWeight: 'bold',
-            fontSize: 26,            
+            fontSize: 26,
+            textTransform: 'uppercase'
           },
           headerRight: () => (
             <View style={{ width: 50, top: 1}}>              

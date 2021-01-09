@@ -7,10 +7,10 @@ import SwitchSelector from "react-native-switch-selector";
 export default function RegisterScreen(props: any) {
   const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
   const [email, setEmail] = useState();
-  const [sex, setSex] = useState();
+  const [sex, setSex] = useState("MALE");
   const [name, setName] = useState();
   const [birthDate, setBirthDate] = useState();
-  const [language, setLangauge] = useState();
+  const [language, setLangauge] = useState("EN");
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -40,11 +40,12 @@ export default function RegisterScreen(props: any) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, sex, name, birthDate, language })
     };
-    fetch('http://localhost:4001/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {
+    fetch('http://localhost:4001/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {      
+      // console.log(data);
       storeData(data.response.insertId);
       props.navigation.replace('Root');
     }).catch((error) => {
-        console.error(error);
+      console.error(error);
     });
   }
 
@@ -78,17 +79,7 @@ export default function RegisterScreen(props: any) {
     }
   }
 
-  const ifExistAtStoreNavigate = async () => {
-    try {
-        await AsyncStorage.getItem('id').then((value) => {          
-          if (updateMode != "true" && value !== null && JSON.parse(value) != null) {
-            props.navigation.replace('Root');
-          }
-        });
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  
 
   useEffect(() => {
     if (updateMode === "true") {
@@ -97,8 +88,6 @@ export default function RegisterScreen(props: any) {
       setEmail(emailP);
       setBirthDate(birthDateP);
       setLangauge(languageP);      
-    } else {
-      ifExistAtStoreNavigate();
     }
   }, []);
   
@@ -124,11 +113,11 @@ export default function RegisterScreen(props: any) {
           options={options}
           textColor={color}
           buttonColor={color}        
-          initial={sexP === "MALE" ? 0 : 1}
+          initial={sexP === "FEMALE" ? 1 : 0}
           onPress={val => setSex(val)}
           hasPadding
           borderColor={color}
-          style={{width: '83%', height: 50, top: '1%', bottom: '1%'}}
+          style={{width: updateMode != "true" ? '83%' : '100%', height: 50, top: '1%', bottom: '1%'}}
         />        
         <TextInput
           style={styles.input}
@@ -141,11 +130,11 @@ export default function RegisterScreen(props: any) {
           options={optionsLang}
           textColor={color}
           buttonColor={color}
-          initial={languageP === "EN" ? 0 : 1}
+          initial={languageP === "TR" ? 1 : 0}
           onPress={val => setLangauge(val)}
           hasPadding
           borderColor={color}
-          style={{width: '83%', height: 50, top: '1%', bottom: '1%'}}
+          style={{width: updateMode != "true" ? '83%' : '100%', height: 50, top: '1%', bottom: '1%'}}
         />
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: 170, height: 40, borderRadius: 8, top: '1%' }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? 'Update' : 'Register'}</Text>

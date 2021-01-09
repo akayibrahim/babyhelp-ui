@@ -26,11 +26,11 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Register" component={RegisterScreen}/>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-    </Stack.Navigator>
+  return (    
+     <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen name="Register" component={RegisterScreen}/>        
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      </Stack.Navigator>
   );
 }
