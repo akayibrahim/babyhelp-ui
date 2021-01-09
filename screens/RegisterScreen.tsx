@@ -117,7 +117,7 @@ export default function RegisterScreen(props: any) {
           onPress={val => setSex(val)}
           hasPadding
           borderColor={color}
-          style={{width: updateMode != "true" ? '83%' : '100%', height: 50, top: '1%', bottom: '1%'}}
+          style={{width: '85%', height: 50, top: '1%', bottom: '1%'}}
         />        
         <TextInput
           style={styles.input}
@@ -134,12 +134,12 @@ export default function RegisterScreen(props: any) {
           onPress={val => setLangauge(val)}
           hasPadding
           borderColor={color}
-          style={{width: updateMode != "true" ? '83%' : '100%', height: 50, top: '1%', bottom: '1%'}}
+          style={{width: '85%', height: 50, top: '1%', bottom: '1%'}}
         />
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: 170, height: 40, borderRadius: 8, top: '1%' }} onPress={registerOrUpdate}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '1%' }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? 'Update' : 'Register'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: 170, height: 40, borderRadius: 8, top: '3%' }} onPress={logout}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '3%' }} onPress={logout}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>Logout</Text>
         </TouchableOpacity>
       </View>
@@ -150,7 +150,7 @@ const color = "#F9B99D";
 
 const styles = StyleSheet.create({
   input: {
-    width: 350,
+    width: '85%',
     height: 55,
     backgroundColor: 'white',
     margin: 10,
