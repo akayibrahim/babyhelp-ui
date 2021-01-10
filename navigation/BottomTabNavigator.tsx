@@ -99,7 +99,7 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="TabOneScreen"
+        name=" "
         component={TabOneScreen}
         options={{ 
           headerTitle: name,
@@ -132,9 +132,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
+        name=" "
         component={TabTwoScreen}
-        options={{ headerTitle: 'Profile' }}
+        options={{ headerTitle: 'PROFILE' }}
       />
     </TabTwoStack.Navigator>
   );

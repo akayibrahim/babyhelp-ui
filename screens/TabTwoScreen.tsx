@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import useColorScheme from '../hooks/useColorScheme';
 import Modal from 'react-native-modal';
 import RegisterScreen from './RegisterScreen';
+import Moment from 'moment';
 
 export default function TabTwoScreen(props:any) {
   const colorScheme = useColorScheme();
@@ -52,7 +53,7 @@ export default function TabTwoScreen(props:any) {
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>Sex: </Text>{sex}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
-      <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>BirthDate: </Text>{birthDate}</Text>
+      <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>BirthDate: </Text>{Moment(birthDate).format('YYYY-MM-DD')}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>Language: </Text>{language}</Text>
       <TouchableOpacity onPress={toggleModal}>

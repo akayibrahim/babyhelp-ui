@@ -3,6 +3,8 @@ import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Ale
 
 import { View } from '../components/Themed';
 import SwitchSelector from "react-native-switch-selector";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Moment from 'moment';
 
 export default function RegisterScreen(props: any) {
   const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
@@ -96,15 +98,16 @@ export default function RegisterScreen(props: any) {
         <Image source={require('../assets/images/babyhelplogo.png')} style={styles.image}/>        
         <TextInput
           style={styles.input}
-          placeholder={updateMode === "true" ? email : 'Email'}
+          placeholder={'Email'}
+          value={email}
           autoCapitalize="none"
           placeholderTextColor={color}
           onChangeText={val => setEmail(val)}
         />
         <TextInput
           style={styles.input}
-          placeholder={updateMode === "true" ? name : 'Name'}
-          //secureTextEntry={true}
+          placeholder={'Name'}
+          value={name}
           autoCapitalize="none"
           placeholderTextColor={color}
           onChangeText={val => setName(val)}
@@ -118,14 +121,18 @@ export default function RegisterScreen(props: any) {
           hasPadding
           borderColor={color}
           style={{width: '85%', height: 50, top: '1%', bottom: '1%'}}
-        />        
-        <TextInput
-          style={styles.input}
-          placeholder={updateMode === "true" ? birthDate : 'Birth Date'}
-          autoCapitalize="none"
-          placeholderTextColor={color}
-          onChangeText={val => setBirthDate(val)}
-        />
+        />                
+        {true && 
+        <DateTimePicker
+          value={new Date(Moment(birthDate).format('YYYY-MM-DD'))}
+          mode='date'
+          display="default"
+          onChange={(event, date) => {
+            setBirthDate(new Date(Moment(date).format('YYYY-MM-DD')));
+          }}
+          style={{width: '85%', height: 120, backgroundColor: "white", borderWidth: 1,  color: color, 
+          borderColor: color, borderRadius: 14, top: '1%', bottom: '1%'}}
+        />}
         <SwitchSelector
           options={optionsLang}
           textColor={color}
@@ -134,12 +141,12 @@ export default function RegisterScreen(props: any) {
           onPress={val => setLangauge(val)}
           hasPadding
           borderColor={color}
-          style={{width: '85%', height: 50, top: '1%', bottom: '1%'}}
+          style={{width: '85%', height: 50, top: '5%', bottom: '1%'}}
         />
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '1%' }} onPress={registerOrUpdate}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '3%' }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? 'Update' : 'Register'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '3%' }} onPress={logout}>
+        <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '5%' }} onPress={logout}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>Logout</Text>
         </TouchableOpacity>
       </View>
@@ -162,15 +169,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',  
   },
+  labelContainer: {
+    position: 'absolute',
+    backgroundColor: '#FFF',
+    top: -8,
+    left: 25,
+    padding: 5,
+    zIndex: 50,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   image: {
-    width: 260,
-    height: 260,
+    width: '70%',
+    height: '30%',
     bottom: '5%'
-
   },
 })
