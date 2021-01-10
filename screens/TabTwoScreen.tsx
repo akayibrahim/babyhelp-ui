@@ -54,6 +54,7 @@ export default function TabTwoScreen(props:any) {
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>Sex: </Text>{sex}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>BirthDate: </Text>{Moment(birthDate).format('YYYY-MM-DD')}</Text>
+      <Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal", fontSize: 12}}>(Year-Month-Day)</Text>
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>Language: </Text>{language}</Text>
       <TouchableOpacity onPress={toggleModal}>
