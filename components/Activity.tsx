@@ -22,10 +22,10 @@ export default function Activity(props: any) {
     <View style={styles.containerName}>      
       <TouchableOpacity onPress={toggleModal} style={{ alignItems: "center", width: '100%' }}>
         <View style={[styles.containerIn, {backgroundColor: activityColor}]}>
-          <Ionicons size={32} style={{ position: "absolute", left: '6%', top: '32%' }} name={type} color={colorScheme === 'dark' ? '#fff' : '#000'} />
-          <Text style={styles.title}>{label}</Text>
-          <Text style={styles.type2}>{typeName}</Text>
-          <Ionicons size={25} style={{ position: "absolute", right: '1%', top: '35%' }} name="chevron-forward-outline" color={colorScheme === 'dark' ? '#fff' : '#000'} />
+          <Ionicons size={32} style={{ position: "absolute", left: '6%', top: '32%' }} name={type} color={'black'} />
+          <Text style={[styles.title, {color:'black'}]}>{label}</Text>
+          <Text style={[styles.type2, {color:'black'}]}>{typeName}</Text>
+          <Ionicons size={25} style={{ position: "absolute", right: '1%', top: '35%' }} name="chevron-forward-outline" color={'black'} />
         </View>
       </TouchableOpacity>
       <Modal 
@@ -35,14 +35,14 @@ export default function Activity(props: any) {
         propagateSwipe={true}
         style={styles.modal}
       > 
-        <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: 'white', flex:0.88, padding: '10%'}}>
+        <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: colorScheme === 'dark' ? 'white' : 'white', flex:0.88, padding: '10%'}}>
           <TouchableOpacity onPress = { () => toggleModal()}>
-            <View style={{ width: 80, height: 50,  position: "absolute", right: -15, borderWidth: 0, top: -15, backgroundColor: 'white' }} >
-              <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={"black"} />
+            <View style={{ width: 80, height: 50,  position: "absolute", right: -15, borderWidth: 0, top: -15, backgroundColor: colorScheme === 'dark' ? 'white' : 'white' }} >
+              <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? 'black' : 'black'} />
             </View>
           </TouchableOpacity>          
           <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-            <Text style={{textAlign: "center", fontWeight: "bold", fontSize: 20, top: 40, }}>{label}</Text>
+            <Text style={{textAlign: "center", fontWeight: "bold", fontSize: 20, top: 40, color: colorScheme === 'dark' ? 'black' : 'black'}}>{label}</Text>
             <TouchableOpacity>
               <HTML source={{ html: detail }} contentWidth={contentWidth} containerStyle={{top: 40,}} />
             </TouchableOpacity>

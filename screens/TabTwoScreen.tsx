@@ -70,10 +70,10 @@ export default function TabTwoScreen(props:any) {
         propagateSwipe={true}
         style={styles.modal}
       >         
-        <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: 'white', flex:0.88, padding: '8%'}}>
+        <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.88, padding: '8%'}}>
           <TouchableOpacity onPress = { () => toggleModal()}>
-            <View style={{ width: 80, height: 50,  position: "absolute", right: -23, borderWidth: 0, top: -23, backgroundColor: 'white' }} >
-              <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={"black"} />
+            <View style={{ width: 80, height: 50,  position: "absolute", right: -23, borderWidth: 0, top: -23, backgroundColor: colorScheme === 'dark' ? "black" : 'white' }} >
+              <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
             </View>
           </TouchableOpacity>    
           <RegisterScreen updateMode={"true"} emailP={email} sexP={sex} languageP={language} nameP={name} birthDateP={birthDate} />
@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
   },
   modal: {
     justifyContent: 'flex-end',
-    margin: 0,
+    margin: 0,    
   },
 });

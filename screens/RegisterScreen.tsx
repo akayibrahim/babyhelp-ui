@@ -5,6 +5,7 @@ import { View } from '../components/Themed';
 import SwitchSelector from "react-native-switch-selector";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
+import useColorScheme from '../hooks/useColorScheme';
 
 export default function RegisterScreen(props: any) {
   const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
@@ -13,6 +14,7 @@ export default function RegisterScreen(props: any) {
   const [name, setName] = useState();
   const [birthDate, setBirthDate] = useState();
   const [language, setLangauge] = useState("EN");
+  const colorScheme = useColorScheme();
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -120,6 +122,7 @@ export default function RegisterScreen(props: any) {
           onPress={val => setSex(val)}
           hasPadding
           borderColor={color}
+          backgroundColor= {colorScheme === 'dark' ? 'black' : "white"}
           style={{width: '85%', height: 50, top: '1%', bottom: '1%'}}
         />                
         {true && 
@@ -130,7 +133,7 @@ export default function RegisterScreen(props: any) {
           onChange={(event, date) => {
             setBirthDate(new Date(Moment(date).format('YYYY-MM-DD')));
           }}
-          style={{width: '85%', height: 120, backgroundColor: "white", borderWidth: 1,  color: color, 
+          style={{width: '85%', height: 120, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
           borderColor: color, borderRadius: 14, top: '1%', bottom: '1%'}}
         />}
         <SwitchSelector
@@ -141,14 +144,18 @@ export default function RegisterScreen(props: any) {
           onPress={val => setLangauge(val)}
           hasPadding
           borderColor={color}
+          backgroundColor= {colorScheme === 'dark' ? 'black' : "white"}
           style={{width: '85%', height: 50, top: '5%', bottom: '1%'}}
         />
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '3%' }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? 'Update' : 'Register'}</Text>
         </TouchableOpacity>
+        {updateMode === "true" && 
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '5%' }} onPress={logout}>
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>Logout</Text>
         </TouchableOpacity>
+        }
+        
       </View>
   );
 }
@@ -158,8 +165,7 @@ const color = "#F9B99D";
 const styles = StyleSheet.create({
   input: {
     width: '85%',
-    height: 55,
-    backgroundColor: 'white',
+    height: 55,  
     margin: 10,
     padding: 8,
     color: color,
@@ -169,22 +175,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',  
   },
-  labelContainer: {
-    position: 'absolute',
-    backgroundColor: '#FFF',
-    top: -8,
-    left: 25,
-    padding: 5,
-    zIndex: 50,
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   image: {
-    width: '70%',
+    width: '60%',
     height: '30%',
-    bottom: '5%'
+    bottom: '1%'
   },
 })
