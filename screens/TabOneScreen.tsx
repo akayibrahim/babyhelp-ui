@@ -8,6 +8,7 @@ import activityColor from '../hooks/activityColor';
 export default function TabOneScreen(props:any) {
   const colorOfActivity = activityColor();
   const [helps, setHelps] = useState();
+  const { language, navigation } = props
 
   useEffect(() => {    
     const options = { method: "GET", headers: { Accept: 'application/json', 'Content-Type': 'application/json'}};
@@ -23,7 +24,7 @@ export default function TabOneScreen(props:any) {
               console.error(error);
             });
           } else {
-            props.navigation.replace('Register');
+            navigation.replace('Register');
           }
         });
       } catch (e) {
@@ -52,8 +53,8 @@ export default function TabOneScreen(props:any) {
       <View style={styles.activities}>
         <ScrollView style={styles.activitiesScroll} showsVerticalScrollIndicator={false}>
             {helps == null ? null : JSON.parse(helps).response.map((item:any, index:number) => 
-              <Activity key={index} label={item.label} typeName={item.type} type={getTypeIcon(item.type)} 
-              detail={item.detail} activityColor={colorOfActivity}></Activity>)
+              <Activity key={index} label={language === "TR" ? item.label : item.labelEng} typeName={language === "TR" ? item.type : item.typeEng} type={getTypeIcon(item.typeEng)} 
+              detail={language === "TR" ? item.detail : item.detailEng} activityColor={colorOfActivity} ></Activity>)
             }
         </ScrollView>
       </View>

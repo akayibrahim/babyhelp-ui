@@ -20,6 +20,10 @@ export default function RegisterScreen(props: any) {
     { label: "MALE", value: "MALE" },
     { label: "FEMALE", value: "FEMALE" }
   ];
+  const optionsTr = [
+    { label: "ERKEK", value: "MALE" },
+    { label: "KADIN", value: "FEMALE" }
+  ];
 
   const optionsLang = [
     { label: "EN", value: "EN" },
@@ -45,7 +49,7 @@ export default function RegisterScreen(props: any) {
       body: JSON.stringify({ email, sex, name, birthDate, language })
     };
     fetch('http://localhost:4001/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {      
-      // console.log(data);
+      console.log(data);
       storeData(data.response.insertId);
       props.navigation.replace('Root');
     }).catch((error) => {
@@ -64,7 +68,7 @@ export default function RegisterScreen(props: any) {
             body: JSON.stringify({ email, sex, name, birthDate, language, id })
           };
           fetch('http://localhost:4001/api/v1/updateUser', requestOptions).then((response) => response.json()).then((data) => {
-            Alert.alert("", "Your information was updated!")
+            Alert.alert("", "Updated!")
           }).catch((error) => {
               console.error(error);
           });       
@@ -83,8 +87,6 @@ export default function RegisterScreen(props: any) {
     }
   }
 
-  
-
   useEffect(() => {
     if (updateMode === "true") {
       setName(nameP);
@@ -100,7 +102,7 @@ export default function RegisterScreen(props: any) {
         <Image source={require('../assets/images/babyhelplogo.png')} style={styles.image}/>        
         <TextInput
           style={styles.input}
-          placeholder={'Email'}
+          placeholder={language==="TR"?"Mail":'Email'}
           value={email}
           autoCapitalize="none"
           placeholderTextColor={color}
@@ -108,14 +110,14 @@ export default function RegisterScreen(props: any) {
         />
         <TextInput
           style={styles.input}
-          placeholder={'Name'}
+          placeholder={language==="TR"?"İsim":'Name'}
           value={name}
           autoCapitalize="none"
           placeholderTextColor={color}
           onChangeText={val => setName(val)}
         />
         <SwitchSelector
-          options={options}
+          options={language==="TR"?optionsTr:options}
           textColor={color}
           buttonColor={color}        
           initial={sexP === "FEMALE" ? 1 : 0}
@@ -131,8 +133,9 @@ export default function RegisterScreen(props: any) {
           mode='date'
           display="default"
           onChange={(event, date) => {
-            setBirthDate(new Date(Moment(date).format('YYYY-MM-DD')));
+            setBirthDate(Moment(date).format('YYYY-MM-DD'));
           }}
+          locale={language==="TR"?"tr-TR":"en-EN"}
           style={{width: '85%', height: 120, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
           borderColor: color, borderRadius: 14, top: '1%', bottom: '1%'}}
         />}
@@ -148,11 +151,11 @@ export default function RegisterScreen(props: any) {
           style={{width: '85%', height: 50, top: '5%', bottom: '1%'}}
         />
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '3%' }} onPress={registerOrUpdate}>
-          <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? 'Update' : 'Register'}</Text>
+          <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? language==="TR"?'Güncelle':'Update' : language==="TR"?'Kayıt Ol':'Register'}</Text>
         </TouchableOpacity>
         {updateMode === "true" && 
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '5%' }} onPress={logout}>
-          <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>Logout</Text>
+          <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{language==="TR"?'Çıkış':'Logout'}</Text>
         </TouchableOpacity>
         }
         
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
-    width: '60%',
+    width: '66%',
     height: '30%',
     bottom: '1%'
   },

@@ -50,13 +50,33 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+function TabOneNavigator(props:any) {
   const colorOfHeader = headerColor();
   const colorScheme = useColorScheme();
   const [week, setWeek] = useState();
   const [name, setName] = useState();
+  const [language, setLanguage] = useState();
 
-  useEffect(() => {    
+  useEffect(() => {
+    const getUserInfo = () => {
+      try {
+        AsyncStorage.getItem('id').then((value) => {          
+          if (value !== null && JSON.parse(value) != null) {
+            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
+              json.response).then((data) => {                
+                var usr = data[0];
+                setName(usr.name);
+                setLanguage(usr.language);
+            }).catch((error) => {
+                console.error(error);
+            });
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }      
+    }
+    getUserInfo();
     const options = { method: "GET", headers: { Accept: 'application/json', 'Content-Type': 'application/json'}};
     const getWeeks = async () => {
       try {
@@ -75,32 +95,15 @@ function TabOneNavigator() {
         console.error(e);
       }
     }
-    getWeeks();
-    const getUserInfo = () => {
-      try {
-        AsyncStorage.getItem('id').then((value) => {          
-          if (value !== null && JSON.parse(value) != null) {
-            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
-              json.response).then((data) => {                
-                var usr = data[0];
-                setName(usr.name);
-            }).catch((error) => {
-                console.error(error);
-            });
-          }
-        });
-      } catch (e) {
-        console.error(e);
-      }      
-    }
-    getUserInfo();
+    getWeeks();    
   }, []);
 
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name=" "
-        component={TabOneScreen}
+        //component={TabOneScreen}
+        children={()=><TabOneScreen language={ language } navigation={props.navigation}/>}
         options={{ 
           headerTitle: name,
           headerStyle: {
@@ -116,7 +119,7 @@ function TabOneNavigator() {
           },
           headerRight: () => (
             <View style={{ width: 50, top: 1}}>              
-              <Text style={{fontSize: 10, textAlign: "center", }}>Week</Text>
+              <Text style={{fontSize: 10, textAlign: "center", }}>{language === "TR" ? "Hafta" : "Week"}</Text>
               <Text style={{fontSize: 18, textAlign: "center", fontWeight: 'bold',}}>{week}</Text>
             </View>
           ),
