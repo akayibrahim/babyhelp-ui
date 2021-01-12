@@ -132,12 +132,33 @@ function TabOneNavigator(props:any) {
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
 function TabTwoNavigator() {
+  const [language, setLanguage] = useState();
+  useEffect(() => {
+    const getUserInfo = () => {
+      try {
+        AsyncStorage.getItem('id').then((value) => {          
+          if (value !== null && JSON.parse(value) != null) {
+            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
+              json.response).then((data) => {                
+                var usr = data[0];                
+                setLanguage(usr.language);
+            }).catch((error) => {
+                console.error(error);
+            });
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }      
+    }
+    getUserInfo();
+  }, []);
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name=" "
         component={TabTwoScreen}
-        options={{ headerTitle: 'PROFILE' }}
+        options={{ headerTitle: language==="TR"?"Profil":'PROFILE' }}
       />
     </TabTwoStack.Navigator>
   );
