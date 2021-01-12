@@ -45,7 +45,7 @@ export default function TabTwoScreen(props:any) {
       }      
     }
     getUserInfo();
-  }, [name]);
+  }, [isModalVisible]);
 
   return (
     <View style={styles.container}>
