@@ -44,7 +44,7 @@ export default function Activity(props: any) {
           <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <Text style={{textAlign: "center", fontWeight: "bold", fontSize: 20, top: 40, color: colorScheme === 'dark' ? 'black' : 'black'}}>{label}</Text>
             <TouchableOpacity>
-              <HTML source={{ html: detail }} contentWidth={contentWidth} containerStyle={{top: 40,}} />
+              <HTML source={{ html: detail }} contentWidth={contentWidth} containerStyle={{top: 40, backgroundColor: "white", }} />
             </TouchableOpacity>
           </ScrollView>
         </View>
