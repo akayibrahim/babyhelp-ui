@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Alert} from 'react-native';
+import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage} from 'react-native';
 
 import { View } from '../components/Themed';
 import SwitchSelector from "react-native-switch-selector";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import useColorScheme from '../hooks/useColorScheme';
+import Modal from 'react-native-modal';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function RegisterScreen(props: any) {
   const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
@@ -15,6 +17,7 @@ export default function RegisterScreen(props: any) {
   const [birthDate, setBirthDate] = useState();
   const [language, setLangauge] = useState("EN");
   const colorScheme = useColorScheme();
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -68,7 +71,7 @@ export default function RegisterScreen(props: any) {
             body: JSON.stringify({ email, sex, name, birthDate, language, id })
           };
           fetch('http://localhost:4001/api/v1/updateUser', requestOptions).then((response) => response.json()).then((data) => {
-            Alert.alert("", "Updated!")
+            setModalVisible(true);
           }).catch((error) => {
               console.error(error);
           });       
@@ -97,6 +100,10 @@ export default function RegisterScreen(props: any) {
     }
   }, []);
   
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return (    
       <View style={styles.container}>        
         <Image source={require('../assets/images/babyhelplogo.png')} style={styles.image}/>        
@@ -158,7 +165,16 @@ export default function RegisterScreen(props: any) {
           <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{language==="TR"?'Çıkış':'Logout'}</Text>
         </TouchableOpacity>
         }
-        
+        <Modal 
+          isVisible={isModalVisible}
+          onBackdropPress={toggleModal}
+          style={{alignItems: "center"}}>
+          <View style={{borderRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.03, width: '60%', padding: '4%', 
+                        alignItems: "center", justifyContent: "center"}}>
+            <Ionicons size={20} style={{ position: "absolute", left: 35 }} name="checkmark-done-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
+            <Text style={{fontWeight:"bold"}}>{language==="TR"?"GÜNCELLENDİ!":"UPDATED!"}</Text>
+          </View>
+        </Modal>
       </View>
   );
 }
