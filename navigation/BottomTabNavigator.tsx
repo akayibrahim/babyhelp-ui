@@ -107,7 +107,7 @@ function TabOneNavigator(props:any) {
         options={{ 
           headerTitle: name,
           headerStyle: {
-            // backgroundColor: colorOfHeader,
+            backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
             elevation: 0, // remove shadow on Android
             shadowOpacity: 0, // remove shadow on iOS            
           },
@@ -133,6 +133,7 @@ const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
 function TabTwoNavigator() {
   const [language, setLanguage] = useState();
+  const colorScheme = useColorScheme();
   useEffect(() => {
     const getUserInfo = () => {
       try {
@@ -158,7 +159,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name=" "
         component={TabTwoScreen}
-        options={{ headerTitle: language==="TR"?"Profil":'PROFILE' }}
+        options={{ headerTitle: language==="TR"?"Profil":'PROFILE', headerStyle: { backgroundColor: colorScheme === 'dark' ? '#000' : '#fff', } }}
       />
     </TabTwoStack.Navigator>
   );
