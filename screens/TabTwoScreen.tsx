@@ -8,6 +8,8 @@ import useColorScheme from '../hooks/useColorScheme';
 import Modal from 'react-native-modal';
 import RegisterScreen from './RegisterScreen';
 import Moment from 'moment';
+import headerColor from '../hooks/headerColor';
+const hColor = headerColor();
 
 export default function TabTwoScreen(props:any) {
   const colorScheme = useColorScheme();
@@ -58,7 +60,7 @@ export default function TabTwoScreen(props:any) {
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>{language==="TR"?"Dil:":"Language:"} </Text>{language}</Text>
       <TouchableOpacity onPress={toggleModal}>
-        <View style={{ backgroundColor: "#487EB8", width: 170, height: 40, borderRadius: 8, top: 50, }}>
+        <View style={{ backgroundColor: hColor, width: 170, height: 40, borderRadius: 8, top: 50, }}>
           <Text style={{ fontSize: 20, color: "white", textAlign: 'center', top: 8, }}>{language==="TR"?"Güncelle":"Edit"}</Text>
           <Ionicons size={20} style={{ position: "absolute", left: 20, top: 10 }} name="pencil" color={"white"} />  
         </View>        

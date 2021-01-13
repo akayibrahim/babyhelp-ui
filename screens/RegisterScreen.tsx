@@ -8,6 +8,8 @@ import Moment from 'moment';
 import useColorScheme from '../hooks/useColorScheme';
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
+import activityColor from '../hooks/activityColor';
+const color = activityColor();
 
 export default function RegisterScreen(props: any) {
   const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
@@ -178,8 +180,6 @@ export default function RegisterScreen(props: any) {
       </View>
   );
 }
-
-const color = "#F9B99D";
 
 const styles = StyleSheet.create({
   input: {
