@@ -68,6 +68,7 @@ export default function TabTwoScreen(props:any) {
       <Modal 
         isVisible={isModalVisible}
         onSwipeComplete={toggleModal}
+        onBackdropPress={toggleModal}
         swipeDirection={['down']}
         propagateSwipe={true}
         style={styles.modal}
