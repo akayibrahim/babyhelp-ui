@@ -119,8 +119,8 @@ function TabOneNavigator(props:any) {
           },
           headerRight: () => (
             <View style={{ width: 50, top: 1}}>              
-              <Text style={{fontSize: 10, textAlign: "center", }}>{language === "TR" ? "Hafta" : "Week"}</Text>
-              <Text style={{fontSize: 18, textAlign: "center", fontWeight: 'bold',}}>{week}</Text>
+              <Text style={{fontSize: 13, textAlign: "center", }}>{language === "TR" ? "Hafta" : "Week"}</Text>
+              <Text style={{fontSize: 19, textAlign: "center", fontWeight: 'bold',}}>{week}</Text>
             </View>
           ),
       }}
