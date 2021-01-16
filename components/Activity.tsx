@@ -12,14 +12,15 @@ export default function Activity(props: any) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [opa, setOpa] = useState(1);
   const colorScheme = useColorScheme();
+  const opacityOfActivity = 0.75;
 
   const openModal = () => {
     read(id);
-    setModalVisible(!isModalVisible);
+    setModalVisible(true);
   };
 
   const closeModal = () => {    
-    setModalVisible(!isModalVisible);
+    setModalVisible(false);
   };
   
   const read = (read: any) => {
@@ -34,7 +35,7 @@ export default function Activity(props: any) {
           };          
           fetch('http://localhost:4001/api/v1/read', requestOptions).then((response) => response.json()).then((data) => {
             //console.log(data);
-            setOpa(0.7);
+            setOpa(opacityOfActivity);
           }).catch((error) => {
               console.error(error);
           });       
@@ -46,7 +47,7 @@ export default function Activity(props: any) {
   }
 
   useEffect(() => {
-    setOpa(!readBefore ? 1 : 0.7);
+    setOpa(!readBefore ? 1 : opacityOfActivity);
   }, [readBefore]);
 
   const contentWidth = useWindowDimensions().width;
@@ -74,7 +75,7 @@ export default function Activity(props: any) {
         style={styles.modal}
       > 
         <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: colorScheme === 'dark' ? 'white' : 'white', flex:0.6, padding: '10%', }}>
-          <TouchableOpacity onPress = { () => openModal} style={{zIndex: 1}}>
+          <TouchableOpacity onPress = { () => closeModal()} style={{zIndex: 1}}>
             <View style={{ width: 80, height: 50,  position: "absolute", right: -20, borderWidth: 0, top: -20, backgroundColor: 'transparent' }} >
               <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? 'black' : 'black'} />
             </View>
