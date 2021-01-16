@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useState} from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native';
+import {useState, useEffect} from 'react';
+import { StyleSheet, TouchableOpacity, ScrollView, useWindowDimensions, AsyncStorage } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from './Themed';
 import Modal from 'react-native-modal';
@@ -8,20 +8,57 @@ import useColorScheme from '../hooks/useColorScheme';
 import HTML from "react-native-render-html";
 
 export default function Activity(props: any) {
-  const {activityColor, type, label, typeName, detail} = props;
+  const {activityColor, type, label, typeName, detail, id, readBefore} = props;
   const [isModalVisible, setModalVisible] = useState(false);
+  const [opa, setOpa] = useState(1);
   const colorScheme = useColorScheme();
 
-  const toggleModal = () => {
+  const openModal = () => {
+    read(id);
+    setModalVisible(!isModalVisible);
+  };
+
+  const closeModal = () => {    
     setModalVisible(!isModalVisible);
   };
   
+  const read = (read: any) => {
+    try {
+      AsyncStorage.getItem('id').then((value) => {          
+        if (value !== null && JSON.parse(value) != null) {
+          var id = JSON.parse(value);
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ read, id })
+          };          
+          fetch('http://localhost:4001/api/v1/read', requestOptions).then((response) => response.json()).then((data) => {
+            //console.log(data);
+            setOpa(0.7);
+          }).catch((error) => {
+              console.error(error);
+          });       
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    setOpa(!readBefore ? 1 : 0.7);
+  }, [readBefore]);
+
   const contentWidth = useWindowDimensions().width;
 
   return (
-    <View style={styles.containerName}>      
-      <TouchableOpacity onPress={toggleModal} style={{ alignItems: "center", width: '100%' }}>
-        <View style={[styles.containerIn, {backgroundColor: activityColor}]}>
+    <View style={styles.containerName}>
+      {
+        //console.log(readBefore)
+        //console.log(opa)
+      }
+      <TouchableOpacity onPress={openModal} style={{ alignItems: "center", width: '100%' }}>
+        <View style={[styles.containerIn, {backgroundColor: activityColor, opacity: opa}]}>
           <Ionicons size={32} style={{ position: "absolute", left: '6%', top: '32%' }} name={type} color={'black'} />
           <Text style={[styles.title, {color:'black'}]}>{label}</Text>
           <Text style={[styles.type2, {color:'black'}]}>{typeName}</Text>
@@ -30,14 +67,14 @@ export default function Activity(props: any) {
       </TouchableOpacity>
       <Modal 
         isVisible={isModalVisible}
-        onSwipeComplete={toggleModal}
-        onBackdropPress={toggleModal}
+        onSwipeComplete={closeModal}
+        onBackdropPress={closeModal}
         swipeDirection={['down']}
         propagateSwipe={true}
         style={styles.modal}
       > 
         <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: colorScheme === 'dark' ? 'white' : 'white', flex:0.6, padding: '10%', }}>
-          <TouchableOpacity onPress = { () => toggleModal()} style={{zIndex: 1}}>
+          <TouchableOpacity onPress = { () => openModal} style={{zIndex: 1}}>
             <View style={{ width: 80, height: 50,  position: "absolute", right: -20, borderWidth: 0, top: -20, backgroundColor: 'transparent' }} >
               <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? 'black' : 'black'} />
             </View>

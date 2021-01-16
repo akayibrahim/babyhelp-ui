@@ -8,7 +8,7 @@ import activityColor from '../hooks/activityColor';
 export default function TabOneScreen(props:any) {
   const colorOfActivity = activityColor();
   const [helps, setHelps] = useState();
-  const { language, navigation } = props
+  const { language, navigation, read } = props
 
   useEffect(() => {    
     const options = { method: "GET", headers: { Accept: 'application/json', 'Content-Type': 'application/json'}};
@@ -18,7 +18,7 @@ export default function TabOneScreen(props:any) {
           if (value !== null && JSON.parse(value) != null) {
             fetch('http://localhost:4001/api/v1/helps?id='+JSON.parse(value), options).then((response) => response.json()).then((json) => {
               var jsonStr = JSON.stringify(json);
-              // console.log(jsonStr);
+              //console.log(read);
               setHelps(jsonStr);
             }).catch((error) => {
               console.error(error);
@@ -49,12 +49,15 @@ export default function TabOneScreen(props:any) {
   }
 
   return (    
-    <View style={styles.container}>    
-      <View style={styles.activities}>
+    <View style={styles.container}>
+      {
+        //console.log(read.includes(-1))
+      }     
+      <View style={styles.activities}>      
         <ScrollView style={styles.activitiesScroll} showsVerticalScrollIndicator={false}>
-            {helps == null ? null : JSON.parse(helps).response.map((item:any, index:number) => 
+            {helps == null ? null : JSON.parse(helps).response.map((item:any, index:number) =>             
               <Activity key={index} label={language === "TR" ? item.label : item.labelEng} typeName={language === "TR" ? item.type : item.typeEng} type={getTypeIcon(item.typeEng)} 
-              detail={language === "TR" ? item.detail : item.detailEng} activityColor={colorOfActivity} ></Activity>)
+              detail={language === "TR" ? item.detail : item.detailEng} id={item.id} readBefore={read.includes(item.id)} activityColor={colorOfActivity} ></Activity>)              
             }
         </ScrollView>
       </View>

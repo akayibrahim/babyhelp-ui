@@ -56,6 +56,7 @@ function TabOneNavigator(props:any) {
   const [week, setWeek] = useState();
   const [name, setName] = useState();
   const [language, setLanguage] = useState();
+  const [read, setRead] = useState([]);
 
   useEffect(() => {
     const getUserInfo = () => {
@@ -65,8 +66,10 @@ function TabOneNavigator(props:any) {
             fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
               json.response).then((data) => {                
                 var usr = data[0];
+                //console.log(usr);
                 setName(usr.name);
                 setLanguage(usr.language);
+                setRead(usr.read.split(";").map(Number));
             }).catch((error) => {
                 console.error(error);
             });
@@ -103,7 +106,7 @@ function TabOneNavigator(props:any) {
       <TabOneStack.Screen
         name=" "
         //component={TabOneScreen}
-        children={()=><TabOneScreen language={ language } navigation={props.navigation}/>}
+        children={()=><TabOneScreen language={ language } read={read} navigation={props.navigation}/>}
         options={{ 
           headerTitle: name,
           headerStyle: {
