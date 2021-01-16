@@ -53,7 +53,7 @@ export default function TabOneScreen(props:any) {
       {helps == null || read === undefined || read.length === 0 || helps === undefined ? null : 
         <View style={styles.activities}>
           {
-            console.log(read)
+            //console.log(read)
           }
           <ScrollView style={styles.activitiesScroll} showsVerticalScrollIndicator={false}>
               {JSON.parse(helps).response.sort((item:any, index:number) => read.includes(item.id) ? 1 : -1).map((item:any, index:number) =>             

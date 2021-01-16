@@ -103,31 +103,34 @@ function TabOneNavigator(props:any) {
 
   return (
     <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name=" "
-        //component={TabOneScreen}
-        children={()=><TabOneScreen language={ language } read={read} navigation={props.navigation}/>}
-        options={{ 
-          headerTitle: name,
-          headerStyle: {
-            backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
-            elevation: 0, // remove shadow on Android
-            shadowOpacity: 0, // remove shadow on iOS            
-          },
-          headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
-          headerTitleStyle: {
-            // fontWeight: 'bold',
-            fontSize: 26,
-            textTransform: 'uppercase'
-          },
-          headerRight: () => (
-            <View style={{ width: 50, top: 1}}>              
-              <Text style={{fontSize: 13, textAlign: "center", }}>{language === "TR" ? "Hafta" : "Week"}</Text>
-              <Text style={{fontSize: 19, textAlign: "center", fontWeight: 'bold',}}>{week}</Text>
-            </View>
-          ),
-      }}
+      {
+        read.length === 0 ? <TabOneStack.Screen name=" " component={TabOneScreen}/> : 
+        <TabOneStack.Screen
+            name=" "
+            //component={TabOneScreen}
+            children={()=><TabOneScreen language={ language } read={read} navigation={props.navigation}/>}
+            options={{ 
+              headerTitle: name,
+              headerStyle: {
+                backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS            
+              },
+              headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
+              headerTitleStyle: {
+                // fontWeight: 'bold',
+                fontSize: 26,
+                textTransform: 'uppercase'
+              },
+              headerRight: () => (
+                <View style={{ width: 50, top: 1}}>              
+                  <Text style={{fontSize: 13, textAlign: "center", }}>{language === "TR" ? "Hafta" : "Week"}</Text>
+                  <Text style={{fontSize: 19, textAlign: "center", fontWeight: 'bold',}}>{week}</Text>
+                </View>
+              ),
+          }}
       />
+      }
     </TabOneStack.Navigator>
   );
 }
