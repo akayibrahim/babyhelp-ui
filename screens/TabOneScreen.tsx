@@ -55,7 +55,7 @@ export default function TabOneScreen(props:any) {
       }     
       <View style={styles.activities}>      
         <ScrollView style={styles.activitiesScroll} showsVerticalScrollIndicator={false}>
-            {helps == null ? null : JSON.parse(helps).response.map((item:any, index:number) =>             
+            {helps == null ? null : JSON.parse(helps).response.sort((item:any, index:number) => read.includes(item.id) ? 1 : -1).map((item:any, index:number) =>             
               <Activity key={index} label={language === "TR" ? item.label : item.labelEng} typeName={language === "TR" ? item.type : item.typeEng} type={getTypeIcon(item.typeEng)} 
               detail={language === "TR" ? item.detail : item.detailEng} id={item.id} readBefore={read.includes(item.id)} activityColor={colorOfActivity} ></Activity>)              
             }
