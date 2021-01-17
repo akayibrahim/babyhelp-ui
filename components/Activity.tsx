@@ -13,6 +13,9 @@ export default function Activity(props: any) {
   const [opa, setOpa] = useState(1);
   const colorScheme = useColorScheme();
   const opacityOfActivity = 0.75;
+  const contentWidth = useWindowDimensions().width;
+  const modalBackColor = activityColor;
+  const modalOpacity = 0.8;
 
   const openModal = () => {
     read(id);
@@ -50,8 +53,6 @@ export default function Activity(props: any) {
     setOpa(!readBefore ? 1 : opacityOfActivity);
   }, [readBefore]);
 
-  const contentWidth = useWindowDimensions().width;
-
   return (
     <View style={styles.containerName}>
       {
@@ -74,7 +75,7 @@ export default function Activity(props: any) {
         propagateSwipe={true}
         style={styles.modal}
       > 
-        <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: colorScheme === 'dark' ? 'white' : 'white', flex: detail.split(" ").length > 50 ? 0.6 : 0.3, padding: '10%', }}>
+        <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: colorScheme === 'dark' ? modalBackColor : modalBackColor, flex: detail.split(" ").length > 50 ? 0.6 : 0.3, padding: '10%', opacity: modalOpacity}}>
           <TouchableOpacity onPress = { () => closeModal()} style={{zIndex: 1}}>
             <View style={{ width: 80, height: 50,  position: "absolute", right: -20, borderWidth: 0, top: -20, backgroundColor: 'transparent' }} >
               <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? 'black' : 'black'} />
@@ -83,7 +84,7 @@ export default function Activity(props: any) {
           <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <Text style={{textAlign: "center", fontWeight: "bold", fontSize: 20, top: 40, color: colorScheme === 'dark' ? 'black' : 'black'}}>{label}</Text>
             <TouchableOpacity>
-              <HTML source={{ html: detail +"<br>" }} contentWidth={contentWidth} containerStyle={{top: 40, backgroundColor: "white", }} />
+              <HTML source={{ html: detail +"<br>" }} contentWidth={contentWidth} containerStyle={{top: 40, backgroundColor: modalBackColor, }} />
             </TouchableOpacity>
           </ScrollView>
         </View>
