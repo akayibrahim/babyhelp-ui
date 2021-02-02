@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage} from 'react-native';
+import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Button} from 'react-native';
 
 import { View } from '../components/Themed';
 import SwitchSelector from "react-native-switch-selector";
@@ -10,6 +10,8 @@ import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import activityColor from '../hooks/activityColor';
 const color = activityColor();
+import ipAddress from '../hooks/ipAddress';
+const ip = ipAddress();
 
 export default function RegisterScreen(props: any) {
   const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
@@ -20,6 +22,7 @@ export default function RegisterScreen(props: any) {
   const [language, setLangauge] = useState("EN");
   const colorScheme = useColorScheme();
   const [isModalVisible, setModalVisible] = useState(false);
+  const [pickDate, setPickDate] = useState(false);
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -50,10 +53,10 @@ export default function RegisterScreen(props: any) {
   const register = () => {
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, sex, name, birthDate, language })
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ email, sex, name, birthDate, language }),
     };
-    fetch('http://localhost:4001/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {      
+    fetch(ip + '/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {      
       console.log(data);
       storeData(data.response.insertId);
       props.navigation.replace('Root');
@@ -72,8 +75,11 @@ export default function RegisterScreen(props: any) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, sex, name, birthDate, language, id })
           };
-          fetch('http://localhost:4001/api/v1/updateUser', requestOptions).then((response) => response.json()).then((data) => {
+          fetch(ip + '/api/v1/updateUser', requestOptions).then((response) => response.json()).then((data) => {            
             setModalVisible(true);
+            setTimeout(() => {
+              setModalVisible(false);
+            }, 1000);
           }).catch((error) => {
               console.error(error);
           });       
@@ -99,12 +105,18 @@ export default function RegisterScreen(props: any) {
       setEmail(emailP);
       setBirthDate(birthDateP);
       setLangauge(languageP);      
+    } else {
+      setBirthDate(Moment(new Date()).format('YYYY-MM-DD'));
     }
   }, []);
   
   const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+    setModalVisible(!isModalVisible);    
   };
+
+  const onFocus = () => {
+    setPickDate(!pickDate);
+  }
 
   return (    
       <View style={styles.container}>        
@@ -125,6 +137,14 @@ export default function RegisterScreen(props: any) {
           placeholderTextColor={color}
           onChangeText={val => setName(val)}
         />
+        <TextInput
+          style={styles.input}
+          placeholder={Moment(birthDate).format('YYYY-MM-DD')}
+          value={Moment(birthDate).format('YYYY-MM-DD')}
+          autoCapitalize="none"
+          placeholderTextColor={color}
+          onTouchStart={onFocus}
+        />
         <SwitchSelector
           options={language==="TR"?optionsTr:options}
           textColor={color}
@@ -135,19 +155,7 @@ export default function RegisterScreen(props: any) {
           borderColor={color}
           backgroundColor= {colorScheme === 'dark' ? 'black' : "white"}
           style={{width: '85%', height: 50, top: '1%', bottom: '1%'}}
-        />                
-        {true && 
-        <DateTimePicker
-          value={new Date(Moment(birthDate).format('YYYY-MM-DD'))}
-          mode='date'
-          display="default"
-          onChange={(event, date) => {
-            setBirthDate(Moment(date).format('YYYY-MM-DD'));
-          }}
-          locale={language==="TR"?"tr-TR":"en-EN"}
-          style={{width: '85%', height: 120, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
-          borderColor: color, borderRadius: 14, top: '1%', bottom: '1%'}}
-        />}
+        />
         <SwitchSelector
           options={optionsLang}
           textColor={color}
@@ -177,6 +185,27 @@ export default function RegisterScreen(props: any) {
             <Text style={{fontWeight:"bold"}}>{language==="TR"?"GÜNCELLENDİ!":"UPDATED!"}</Text>
           </View>
         </Modal>
+        <Modal 
+          isVisible={pickDate}
+          style={styles.modal}>
+          <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex: 0.24, padding: '10%'}}>
+            <View style={{position: "absolute", right: 30, top: 5}}>
+              <Button title={language==="TR"?"Bitti":"Done"} onPress={() => onFocus()}></Button>
+            </View>
+            <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
+            <DateTimePicker
+              value={new Date(Moment(birthDate).format('YYYY-MM-DD'))}
+              mode='date'
+              display="default"
+              onChange={(event, date) => {
+                setBirthDate(Moment(date).format('YYYY-MM-DD'));
+              }}
+              locale={language==="TR"?"tr-TR":"en-EN"}
+              style={{width: '100%', height: 180, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
+              borderColor: color, borderRadius: 14, top: '5%', bottom: '1%'}}
+            />
+          </View>          
+        </Modal>
       </View>
   );
 }
@@ -203,5 +232,15 @@ const styles = StyleSheet.create({
     width: '66%',
     height: '30%',
     bottom: '1%'
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  separator: {
+    marginVertical: 2,
+    height: 1,
+    width: '150%',
+    left: '-20%'
   },
 })

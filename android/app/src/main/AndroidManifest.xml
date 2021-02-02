@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.airbnb.android.react.maps.example">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <application
+      android:name=".MainApplication"
+      android:usesCleartextTraffic="true"  
+      android:networkSecurityConfig="@xml/network_security_config"
+      >
+    </application>
+
+</manifest>
