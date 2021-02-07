@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, AsyncStorage} from 'react-native';
-
+import { StyleSheet, ScrollView, AsyncStorage, Text} from 'react-native';
 import { View } from '../components/Themed';
 import Activity from '../components/Activity';
 import activityColor from '../hooks/activityColor';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TabOneScreen(props:any) {
   const colorOfActivity = activityColor();
@@ -50,6 +50,15 @@ export default function TabOneScreen(props:any) {
 
   return (    
     <View style={styles.container}>      
+        {helps == null || read === undefined || read.length === 0 || helps === undefined ? null :
+        JSON.parse(helps).response.filter((item:any, index:number) => !read.includes(item.id)).length === 0 && 
+        <View style={{top:'3%'}}>
+          <Text style={{textAlign: 'center', fontSize: 10, }}>{language === "TR" ? "TÜM İÇERİĞİ OKUDUNUZ." : "YOU READ ALL CONTENT."}</Text>
+          <Text style={{textAlign: 'center', fontSize: 10, }}>{language === "TR" ? "ÖNÜMÜZDEKİ AY/HAFTA YENİ İÇERİKLER YÜKLENECEKTİR!": "NEW CONTENT WILL BE UPLOADED IN THE NEXT MONTH/WEEK!"}</Text>
+          <View style={{alignItems: 'center', }}>
+            <Ionicons size={32} style={{  }} name="caret-down-sharp" color={'black'} />
+          </View>
+        </View>}
       {helps == null || read === undefined || read.length === 0 || helps === undefined ? null : 
         <View style={styles.activities}>
           {
@@ -57,7 +66,7 @@ export default function TabOneScreen(props:any) {
           }
           <ScrollView style={styles.activitiesScroll} showsVerticalScrollIndicator={false}>
               {JSON.parse(helps).response.sort((item:any, index:number) => read.includes(item.id) ? 1 : -1).map((item:any, index:number) =>             
-                <Activity key={index} label={language === "TR" ? item.label : item.labelEng} typeName={language === "TR" ? item.type : item.typeEng} type={getTypeIcon(item.typeEng)} 
+                <Activity key={index} label={language === "TR" ? item.label : item.labelEng} typeName={ language === "TR" ? item.type : item.typeEng} type={getTypeIcon(item.typeEng)} 
                 detail={language === "TR" ? item.detail : item.detailEng} id={item.id} readBefore={read.includes(item.id)} activityColor={colorOfActivity} ></Activity>)              
               }
           </ScrollView>
