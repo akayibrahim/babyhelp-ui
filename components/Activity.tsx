@@ -14,8 +14,8 @@ export default function Activity(props: any) {
   const colorScheme = useColorScheme();
   const opacityOfActivity = 0.75;
   const contentWidth = useWindowDimensions().width;
-  const modalBackColor = activityColor;
-  const modalOpacity = 0.8;
+  const modalBackColor = "white";
+  const modalOpacity = 0.9;
 
   const openModal = () => {
     read(id);

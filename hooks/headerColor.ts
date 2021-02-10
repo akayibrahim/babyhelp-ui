@@ -4,5 +4,5 @@ import { ColorSchemeName, useColorScheme as _useColorScheme } from 'react-native
 // type suggests that it can be null. This will not happen in practice, so this
 // makes it a bit easier to work with.
 export default function headerColor(): string {
-  return "#487EB8"; //#487EB8
+  return "#5B84B1"; //#487EB8
 }
