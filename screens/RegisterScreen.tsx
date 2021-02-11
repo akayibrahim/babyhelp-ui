@@ -10,6 +10,7 @@ import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import activityColor from '../hooks/activityColor';
 const color = activityColor();
+const colorText = "black"
 import ipAddress from '../hooks/ipAddress';
 const ip = ipAddress();
 
@@ -126,7 +127,7 @@ export default function RegisterScreen(props: any) {
           placeholder={language==="TR"?"Mail":'Email'}
           value={email}
           autoCapitalize="none"
-          placeholderTextColor={color}
+          placeholderTextColor={colorText}
           onChangeText={val => setEmail(val)}
         />
         <TextInput
@@ -134,7 +135,7 @@ export default function RegisterScreen(props: any) {
           placeholder={language==="TR"?"İsim":'Name'}
           value={name}
           autoCapitalize="none"
-          placeholderTextColor={color}
+          placeholderTextColor={colorText}
           onChangeText={val => setName(val)}
         />
         <TextInput
@@ -142,12 +143,13 @@ export default function RegisterScreen(props: any) {
           placeholder={Moment(birthDate).format('YYYY-MM-DD')}
           value={Moment(birthDate).format('YYYY-MM-DD')}
           autoCapitalize="none"
-          placeholderTextColor={color}
+          placeholderTextColor={colorText}
           onTouchStart={onFocus}
         />
         <SwitchSelector
           options={language==="TR"?optionsTr:options}
           textColor={color}
+          selectedColor={colorText}
           buttonColor={color}        
           initial={sexP === "FEMALE" ? 1 : 0}
           onPress={val => setSex(val)}
@@ -159,6 +161,7 @@ export default function RegisterScreen(props: any) {
         <SwitchSelector
           options={optionsLang}
           textColor={color}
+          selectedColor={colorText}
           buttonColor={color}
           initial={languageP === "TR" ? 1 : 0}
           onPress={val => setLangauge(val)}
@@ -168,11 +171,11 @@ export default function RegisterScreen(props: any) {
           style={{width: '85%', height: 50, top: '5%', bottom: '1%'}}
         />
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '3%' }} onPress={registerOrUpdate}>
-          <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{updateMode === "true" ? language==="TR"?'Güncelle':'Update' : language==="TR"?'Kayıt Ol':'Register'}</Text>
+          <Text style={{ fontSize: 18, color: colorText, textAlign: 'center', top: 8, }}>{updateMode === "true" ? language==="TR"?'Güncelle':'Update' : language==="TR"?'Kayıt Ol':'Register'}</Text>
         </TouchableOpacity>
         {updateMode === "true" && 
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '5%' }} onPress={logout}>
-          <Text style={{ fontSize: 18, color: color, textAlign: 'center', top: 8, }}>{language==="TR"?'Çıkış':'Logout'}</Text>
+          <Text style={{ fontSize: 18, color: colorText, textAlign: 'center', top: 8, }}>{language==="TR"?'Çıkış':'Logout'}</Text>
         </TouchableOpacity>
         }
         <Modal 
@@ -216,7 +219,7 @@ const styles = StyleSheet.create({
     height: 55,  
     margin: 10,
     padding: 8,
-    color: color,
+    color: colorText,
     borderWidth: 1,
     borderColor: color,
     borderRadius: 14,
