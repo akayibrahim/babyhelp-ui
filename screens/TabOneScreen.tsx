@@ -4,6 +4,8 @@ import { View } from '../components/Themed';
 import Activity from '../components/Activity';
 import activityColor from '../hooks/activityColor';
 import { Ionicons } from '@expo/vector-icons';
+import ipAddress from '../hooks/ipAddress';
+const ip = ipAddress();
 
 export default function TabOneScreen(props:any) {
   const colorOfActivity = activityColor();
@@ -16,7 +18,7 @@ export default function TabOneScreen(props:any) {
       try {
         await AsyncStorage.getItem('id').then((value) => {
           if (value !== null && JSON.parse(value) != null) {
-            fetch('http://localhost:4001/api/v1/helps?id='+JSON.parse(value), options).then((response) => response.json()).then((json) => {
+            fetch(ip + '/api/v1/helps?id='+JSON.parse(value), options).then((response) => response.json()).then((json) => {
               var jsonStr = JSON.stringify(json);
               //console.log(read);
               setHelps(jsonStr);

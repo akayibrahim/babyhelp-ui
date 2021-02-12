@@ -11,6 +11,8 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import headerColor from '../hooks/headerColor';
 import { Text, View } from '../components/Themed';
+import ipAddress from '../hooks/ipAddress';
+const ip = ipAddress();
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -63,7 +65,7 @@ function TabOneNavigator(props:any) {
       try {
         AsyncStorage.getItem('id').then((value) => {          
           if (value !== null && JSON.parse(value) != null) {
-            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
+            fetch(ip + '/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
               json.response).then((data) => {                
                 var usr = data[0];
                 //console.log(usr);
@@ -85,7 +87,7 @@ function TabOneNavigator(props:any) {
       try {
         await AsyncStorage.getItem('id').then((value) => {
           if (value !== null && JSON.parse(value) != null) {
-            fetch('http://localhost:4001/api/v1/week?id='+JSON.parse(value), options).then((response) => response.json()).then((json) => 
+            fetch(ip + '/api/v1/week?id='+JSON.parse(value), options).then((response) => response.json()).then((json) => 
             json.response).then((data) => {
               var week = data[0];
               setWeek(week.weeks);
@@ -120,7 +122,7 @@ function TabOneNavigator(props:any) {
               headerTitleStyle: {
                 // fontWeight: 'bold',
                 fontSize: 26,
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',                
               },
               headerRight: () => (
                 <View style={{ width: 50, top: 1}}>              
@@ -145,7 +147,7 @@ function TabTwoNavigator() {
       try {
         AsyncStorage.getItem('id').then((value) => {          
           if (value !== null && JSON.parse(value) != null) {
-            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
+            fetch(ip + '/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
               json.response).then((data) => {                
                 var usr = data[0];                
                 setLanguage(usr.language);

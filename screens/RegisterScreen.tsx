@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Button} from 'react-native';
+import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Button, Platform} from 'react-native';
 
 import { View } from '../components/Themed';
 import SwitchSelector from "react-native-switch-selector";
@@ -56,6 +56,7 @@ export default function RegisterScreen(props: any) {
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ email, sex, name, birthDate, language }),
     };
+    console.log(ip);
     fetch(ip + '/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {      
       console.log(data);
       storeData(data.response.insertId);
@@ -187,7 +188,8 @@ export default function RegisterScreen(props: any) {
             <Text style={{fontWeight:"bold"}}>{language==="TR"?"GÜNCELLENDİ!":"UPDATED!"}</Text>
           </View>
         </Modal>
-        <Modal 
+        {Platform.OS === 'ios' ? 
+          <Modal 
           isVisible={pickDate}
           style={styles.modal}>
           <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex: 0.24, padding: '10%'}}>
@@ -208,6 +210,24 @@ export default function RegisterScreen(props: any) {
             />
           </View>          
         </Modal>
+        : pickDate &&
+          <DateTimePicker
+              value={new Date(Moment(birthDate).format('YYYY-MM-DD'))}
+              mode='date'
+              display="default"
+              onChange={(event, date) => {
+                if (event.type == "set") {
+                  setBirthDate(Moment(date).format('YYYY-MM-DD'));  
+                  onFocus();
+                } else if (event.type == "dismiss") {
+                  onFocus();
+                }
+              }}
+              locale={language==="TR"?"tr-TR":"en-EN"}
+              style={{width: '100%', height: 180, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
+              borderColor: color, borderRadius: 14, top: '5%', bottom: '1%'}}
+            />
+        }
       </View>
   );
 }

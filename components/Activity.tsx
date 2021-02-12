@@ -6,6 +6,8 @@ import { Text, View } from './Themed';
 import Modal from 'react-native-modal';
 import useColorScheme from '../hooks/useColorScheme';
 import HTML from "react-native-render-html";
+import ipAddress from '../hooks/ipAddress';
+const ip = ipAddress();
 
 export default function Activity(props: any) {
   const {activityColor, type, label, typeName, detail, id, readBefore} = props;
@@ -15,7 +17,7 @@ export default function Activity(props: any) {
   const opacityOfActivity = 0.75;
   const contentWidth = useWindowDimensions().width;
   const modalBackColor = "white";
-  const modalOpacity = 0.9;
+  const modalOpacity = 1;
 
   const openModal = () => {
     read(id);
@@ -36,7 +38,7 @@ export default function Activity(props: any) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ read, id })
           };          
-          fetch('http://localhost:4001/api/v1/read', requestOptions).then((response) => response.json()).then((data) => {
+          fetch(ip + '/api/v1/read', requestOptions).then((response) => response.json()).then((data) => {
             //console.log(data);
             setOpa(opacityOfActivity);
           }).catch((error) => {

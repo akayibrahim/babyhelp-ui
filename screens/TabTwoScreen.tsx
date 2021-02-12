@@ -10,6 +10,8 @@ import RegisterScreen from './RegisterScreen';
 import Moment from 'moment';
 import headerColor from '../hooks/headerColor';
 const hColor = headerColor();
+import ipAddress from '../hooks/ipAddress';
+const ip = ipAddress();
 
 export default function TabTwoScreen(props:any) {
   const colorScheme = useColorScheme();
@@ -29,7 +31,7 @@ export default function TabTwoScreen(props:any) {
       try {
         AsyncStorage.getItem('id').then((value) => {          
           if (value !== null && JSON.parse(value) != null) {
-            fetch('http://localhost:4001/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
+            fetch(ip + '/api/v1/users?id='+JSON.parse(value)).then((response) => response.json()).then((json) =>
               json.response).then((data) => {                
                 var usr = data[0];
                 setName(usr.name);
@@ -59,7 +61,7 @@ export default function TabTwoScreen(props:any) {
       <Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal", fontSize: 12}}>{language==="TR"?"(Yıl-Ay-Gün)":"(Year-Month-Day)"}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
       <Text style={styles.title}><Text style={{color: colorScheme === 'dark' ? 'gray' : '#000', fontWeight: "normal"}}>{language==="TR"?"Dil:":"Language:"} </Text>{language}</Text>
-      <TouchableOpacity onPress={toggleModal}>
+      <TouchableOpacity onPress={toggleModal} >
         <View style={{ backgroundColor: hColor, width: 170, height: 40, borderRadius: 8, top: 50, }}>
           <Text style={{ fontSize: 20, color: "white", textAlign: 'center', top: 8, }}>{language==="TR"?"Güncelle":"Edit"}</Text>
           <Ionicons size={20} style={{ position: "absolute", left: 20, top: 10 }} name="pencil" color={"white"} />  
