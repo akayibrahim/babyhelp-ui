@@ -121,7 +121,7 @@ export default function RegisterScreen(props: any) {
 
   return (    
       <View style={styles.container}>        
-        <Image source={require('../assets/images/babyhelplogo.png')} style={styles.image}/>        
+        <Image source={require('../assets/images/babyhelpicon.png')} style={styles.image}/>
         <TextInput
           style={styles.input}
           placeholder={language==="TR"?"Mail":'Email'}
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
-    width: '66%',
+    width: '65%',
     height: '30%',
     bottom: '1%'
   },
