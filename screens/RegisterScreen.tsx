@@ -10,12 +10,11 @@ import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import activityColor from '../hooks/activityColor';
 const color = activityColor();
-const colorText = "black"
 import ipAddress from '../hooks/ipAddress';
 const ip = ipAddress();
 
 export default function RegisterScreen(props: any) {
-  const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
+  const { updateMode, emailP, sexP, nameP, birthDateP, languageP, colorText } = props;
   const [email, setEmail] = useState();
   const [sex, setSex] = useState("MALE");
   const [name, setName] = useState();
@@ -123,7 +122,7 @@ export default function RegisterScreen(props: any) {
       <View style={styles.container}>        
         <Image source={require('../assets/images/babyhelpicon.png')} style={styles.image}/>
         <TextInput
-          style={styles.input}
+          style={[styles.input, {color: colorText}]}
           placeholder={language==="TR"?"Mail":'Email'}
           value={email}
           autoCapitalize="none"
@@ -131,7 +130,7 @@ export default function RegisterScreen(props: any) {
           onChangeText={val => setEmail(val)}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, {color: colorText}]}
           placeholder={language==="TR"?"İsim":'Name'}
           value={name}
           autoCapitalize="none"
@@ -139,7 +138,7 @@ export default function RegisterScreen(props: any) {
           onChangeText={val => setName(val)}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, {color: colorText}]}
           placeholder={Moment(birthDate).format('YYYY-MM-DD')}
           value={Moment(birthDate).format('YYYY-MM-DD')}
           autoCapitalize="none"
@@ -219,7 +218,6 @@ const styles = StyleSheet.create({
     height: 55,  
     margin: 10,
     padding: 8,
-    color: colorText,
     borderWidth: 1,
     borderColor: color,
     borderRadius: 14,

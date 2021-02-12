@@ -79,7 +79,7 @@ export default function TabTwoScreen(props:any) {
               <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
             </View>
           </TouchableOpacity>    
-          <RegisterScreen updateMode={"true"} emailP={email} sexP={sex} languageP={language} nameP={name} birthDateP={birthDate} />
+          <RegisterScreen updateMode={"true"} emailP={email} sexP={sex} languageP={language} nameP={name} birthDateP={birthDate} colorText={colorScheme === 'dark' ? "white" : 'black'} />
         </View>
       </Modal>
     </View>
