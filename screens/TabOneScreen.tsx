@@ -45,6 +45,8 @@ export default function TabOneScreen(props:any) {
       return "medal-outline";
     } else if ("LEAP" === type ) {
       return "trending-up-outline";
+    } else if ("HEALTH" === type ) {
+      return "medkit-outline";
     }
   }
 
