@@ -14,7 +14,7 @@ import ipAddress from '../hooks/ipAddress';
 const ip = ipAddress();
 
 export default function RegisterScreen(props: any) {
-  const { updateMode, emailP, sexP, nameP, birthDateP, languageP, colorText } = props;
+  const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
   const [email, setEmail] = useState();
   const [sex, setSex] = useState("MALE");
   const [name, setName] = useState();
@@ -23,6 +23,7 @@ export default function RegisterScreen(props: any) {
   const colorScheme = useColorScheme();
   const [isModalVisible, setModalVisible] = useState(false);
   const [pickDate, setPickDate] = useState(false);
+  const [colorText, setColorText] = useState();
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -56,9 +57,8 @@ export default function RegisterScreen(props: any) {
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ email, sex, name, birthDate, language }),
     };
-    console.log(ip);
     fetch(ip + '/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {      
-      console.log(data);
+      //console.log(data);
       storeData(data.response.insertId);
       props.navigation.replace('Root');
     }).catch((error) => {
@@ -109,6 +109,7 @@ export default function RegisterScreen(props: any) {
     } else {
       setBirthDate(Moment(new Date()).format('YYYY-MM-DD'));
     }
+    setColorText(colorScheme === "dark" ? "white" : "black");
   }, []);
   
   const toggleModal = () => {
