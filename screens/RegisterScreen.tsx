@@ -24,6 +24,7 @@ export default function RegisterScreen(props: any) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [pickDate, setPickDate] = useState(false);
   const [colorText, setColorText] = useState();
+  const [isWarmVisible, setWarmVisible] = useState(false);
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -60,7 +61,7 @@ export default function RegisterScreen(props: any) {
     fetch(ip + '/api/v1/addUser', requestOptions).then((response) => response.json()).then((data) => {      
       //console.log(data);
       storeData(data.response.insertId);
-      props.navigation.replace('Root');
+      setWarmVisible(true);      
     }).catch((error) => {
       console.error(error);
     });
@@ -80,7 +81,7 @@ export default function RegisterScreen(props: any) {
             setModalVisible(true);
             setTimeout(() => {
               setModalVisible(false);
-            }, 1000);
+            }, 3000);
           }).catch((error) => {
               console.error(error);
           });       
@@ -125,6 +126,11 @@ export default function RegisterScreen(props: any) {
         {children}
     </TouchableWithoutFeedback>
     );
+
+  const closeWarm = () => {
+    setWarmVisible(false);
+    props.navigation.replace('Root');
+  };
 
   return (    
       <View style={styles.container}>        
@@ -239,6 +245,22 @@ export default function RegisterScreen(props: any) {
               borderColor: color, borderRadius: 14, top: '5%', bottom: '1%'}}
             />
         }
+        <Modal 
+          isVisible={isWarmVisible}
+          onBackdropPress={closeWarm}
+          style={{alignItems: "center"}}>
+          <View style={{borderRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.35, width: '80%', padding: '4%', alignItems: "center", justifyContent: "center"}}>
+            <Ionicons size={30} style={{ bottom: 10 }} name="alert-circle-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
+            <Text style={{fontWeight:"bold", bottom: 10}}>{language==="TR"?
+            "Bu uygulamada paylaşılan bilgiler genel olup bebeğinizin içinden geçeceği büyüme konuları ile ilgili yardımcı bilgi içermektedir. Her bebeğin büyümesi kendine özel olması sebebi ile en doğru bilgiyi doktorunuzdan alabilirsiniz"
+            :
+            "The information shared in this application is general and contains helpful information about the growth content your baby will be contaminated. Since each baby's growth is unique, please contact your doctor."}</Text>
+            <View style={styles.separatorWarm} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
+            <View style={{}}>
+              <Button title={language==="TR"?"Tamam":"OK"} onPress={() => closeWarm()}></Button>
+            </View>            
+          </View>
+        </Modal>
       </View>
   );
 }
@@ -274,5 +296,11 @@ const styles = StyleSheet.create({
     height: 1,
     width: '150%',
     left: '-20%'
+  },
+  separatorWarm: {
+    marginVertical: 2,
+    height: 1,
+    width: '100%',
+    left: '0%'
   },
 })
