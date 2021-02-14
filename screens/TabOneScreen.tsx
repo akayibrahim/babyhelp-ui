@@ -55,6 +55,12 @@ export default function TabOneScreen(props:any) {
   return (    
     <View style={styles.container}>      
         {helps == null || read === undefined || read.length === 0 || helps === undefined ? null :
+        JSON.parse(helps).response.length === 0 ?
+        <View style={{top:'3%'}}>
+          <Text style={{textAlign: 'center', fontSize: 10, }}>{language === "TR" ? "TÜM İÇERİĞİ OKUDUNUZ." : "YOU READ ALL CONTENT."}</Text>
+          <Text style={{textAlign: 'center', fontSize: 12, }}>{language === "TR" ? "6-12 ay için içerik çok yakında yüklenecektir.": "For 6-12 months, content will be uploaded very soon."}</Text>
+        </View>
+        :
         JSON.parse(helps).response.filter((item:any, index:number) => !read.includes(item.id)).length === 0 && 
         <View style={{top:'3%'}}>
           <Text style={{textAlign: 'center', fontSize: 10, }}>{language === "TR" ? "TÜM İÇERİĞİ OKUDUNUZ." : "YOU READ ALL CONTENT."}</Text>
@@ -63,7 +69,7 @@ export default function TabOneScreen(props:any) {
             <Ionicons size={32} style={{  }} name="caret-down-sharp" color={'black'} />
           </View>
         </View>}
-      {helps == null || read === undefined || read.length === 0 || helps === undefined ? null : 
+        {helps == null || read === undefined || read.length === 0 || helps === undefined ? null : 
         <View style={styles.activities}>
           {
             //console.log(read)
@@ -71,11 +77,11 @@ export default function TabOneScreen(props:any) {
           <ScrollView style={styles.activitiesScroll} showsVerticalScrollIndicator={false}>
               {JSON.parse(helps).response.sort((item:any, index:number) => read.includes(item.id) ? 1 : -1).map((item:any, index:number) =>             
                 <Activity key={index} label={language === "TR" ? item.label : item.labelEng} typeName={ language === "TR" ? item.type : item.typeEng} type={getTypeIcon(item.typeEng)} 
-                detail={language === "TR" ? item.detail : item.detailEng} id={item.id} readBefore={read.includes(item.id)} activityColor={colorOfActivity} ></Activity>)              
+                detail={language === "TR" ? item.detail : item.detailEng} id={item.id} readBefore={read.includes(item.id)} activityColor={colorOfActivity} ></Activity>)        
               }
           </ScrollView>
         </View>
-      }
+        }
     </View>
   );
 }
