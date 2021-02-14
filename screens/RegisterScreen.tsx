@@ -199,7 +199,7 @@ export default function RegisterScreen(props: any) {
           style={{alignItems: "center"}}>
           <View style={{borderRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.03, width: '60%', padding: '4%', 
                         alignItems: "center", justifyContent: "center"}}>
-            <Ionicons size={20} style={{ position: "absolute", left: 35 }} name="checkmark-done-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
+            <Ionicons size={20} style={{ position: "absolute", left: 20 }} name="checkmark-done-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
             <Text style={{fontWeight:"bold"}}>{language==="TR"?"GÜNCELLENDİ!":"UPDATED!"}</Text>
           </View>
         </Modal>
