@@ -64,7 +64,7 @@ export default function Activity(props: any) {
       <TouchableOpacity onPress={openModal} style={{ alignItems: "center", width: '100%' }}>
         <View style={[styles.containerIn, {backgroundColor: activityColor, opacity: opa}]}>
           <Ionicons size={32} style={{ position: "absolute", left: '6%', top: '32%' }} name={type} color={'black'} />
-          <Text style={[styles.title, {color:'black', fontSize:label.length < 18 ? 20 : label.length > 25 ? 15 : 17}]}>{label}</Text>
+          <Text style={[styles.title, {color:'black', fontSize:label.length < 18 ? 20 : label.length >= 24 ? 15 : 17}]}>{label}</Text>
           <Text style={[styles.type2, {color:'black'}]}>{typeName}</Text>
           <Ionicons size={25} style={{ position: "absolute", right: '1%', top: '35%' }} name="chevron-forward-outline" color={'black'} />
         </View>
