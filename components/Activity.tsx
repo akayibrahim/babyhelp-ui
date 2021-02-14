@@ -77,7 +77,7 @@ export default function Activity(props: any) {
         propagateSwipe={true}
         style={styles.modal}
       > 
-        <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colorScheme === 'dark' ? modalBackColor : modalBackColor, flex: detail.split(" ").length > 50 ? 0.6 : 0.3, padding: '10%', opacity: modalOpacity}}>
+        <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colorScheme === 'dark' ? modalBackColor : modalBackColor, flex: (detail.split(" ").length > 50 ||  detail.split("li").length>3) ? 0.6 : 0.3, padding: '10%', opacity: modalOpacity}}>
           <TouchableOpacity onPress = { () => closeModal()} style={{zIndex: 1}}>
             <View style={{ width: 80, height: 50,  position: "absolute", right: -20, borderWidth: 0, top: -20, backgroundColor: 'transparent' }} >
               <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? 'black' : 'black'} />
@@ -85,7 +85,7 @@ export default function Activity(props: any) {
           </TouchableOpacity>          
           <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <Text style={{textAlign: "center", fontWeight: "bold", fontSize: 20, top: 40, color: colorScheme === 'dark' ? 'black' : 'black'}}>{label}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity activeOpacity={1}>
               <HTML source={{ html: detail +"<br>" }} contentWidth={contentWidth} containerStyle={{top: 40, backgroundColor: modalBackColor, }} />
             </TouchableOpacity>
           </ScrollView>
