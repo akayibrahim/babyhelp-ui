@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Button, Platform} from 'react-native';
+import { TouchableOpacity, Text, TextInput, StyleSheet, Image, AsyncStorage, Button, Platform, Keyboard,  TouchableWithoutFeedback } from 'react-native';
 
 import { View } from '../components/Themed';
 import SwitchSelector from "react-native-switch-selector";
@@ -120,6 +120,12 @@ export default function RegisterScreen(props: any) {
     setPickDate(!pickDate);
   }
 
+  const DismissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {children}
+    </TouchableWithoutFeedback>
+    );
+
   return (    
       <View style={styles.container}>        
         <Image source={require('../assets/images/babyhelpicon.png')} style={styles.image}/>
@@ -139,14 +145,16 @@ export default function RegisterScreen(props: any) {
           placeholderTextColor={colorText}
           onChangeText={val => setName(val)}
         />
-        <TextInput
-          style={[styles.input, {color: colorText}]}
-          placeholder={Moment(birthDate).format('YYYY-MM-DD')}
-          value={Moment(birthDate).format('YYYY-MM-DD')}
-          autoCapitalize="none"
-          placeholderTextColor={colorText}
-          onTouchStart={onFocus}
-        />
+        <DismissKeyboard>
+          <TextInput
+              style={[styles.input, {color: colorText}]}
+              placeholder={Moment(birthDate).format('YYYY-MM-DD')}
+              value={Moment(birthDate).format('YYYY-MM-DD')}
+              autoCapitalize="none"
+              placeholderTextColor={colorText}
+              onTouchStart={onFocus}                          
+            />
+        </DismissKeyboard>        
         <SwitchSelector
           options={language==="TR"?optionsTr:options}
           textColor={color}
@@ -193,7 +201,7 @@ export default function RegisterScreen(props: any) {
           <Modal 
           isVisible={pickDate}
           style={styles.modal}>
-          <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex: 0.24, padding: '10%'}}>
+          <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex: 0.28, padding: '10%'}}>
             <View style={{position: "absolute", right: 30, top: 5}}>
               <Button title={language==="TR"?"Bitti":"Done"} onPress={() => onFocus()}></Button>
             </View>
@@ -205,9 +213,10 @@ export default function RegisterScreen(props: any) {
               onChange={(event, date) => {
                 setBirthDate(Moment(date).format('YYYY-MM-DD'));
               }}
+              textColor= "#000"
               locale={language==="TR"?"tr-TR":"en-EN"}
-              style={{width: '100%', height: 180, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
-              borderColor: color, borderRadius: 14, top: '5%', bottom: '1%'}}
+              style={{width: '100%', height: 180, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 0, color: color,
+                borderColor: color, borderRadius: 14, top: '5%', bottom: '1%', }}
             />
           </View>          
         </Modal>
@@ -224,6 +233,7 @@ export default function RegisterScreen(props: any) {
                   onFocus();
                 }
               }}
+              textColor= "#000"
               locale={language==="TR"?"tr-TR":"en-EN"}
               style={{width: '100%', height: 180, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
               borderColor: color, borderRadius: 14, top: '5%', bottom: '1%'}}
