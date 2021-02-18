@@ -188,7 +188,7 @@ export default function RegisterScreen(props: any) {
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '1%', }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: colorText, textAlign: 'center', top: 8, }}>{updateMode === "true" ? language==="TR"?'Güncelle':'Update' : language==="TR"?'Kayıt Ol':'Register'}</Text>
         </TouchableOpacity>
-        {updateMode === "true" && 
+        {updateMode === "true" && false && 
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '5%' }} onPress={logout}>
           <Text style={{ fontSize: 18, color: colorText, textAlign: 'center', top: 8, }}>{language==="TR"?'Çıkış':'Logout'}</Text>
         </TouchableOpacity>
