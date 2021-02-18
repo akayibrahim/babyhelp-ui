@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/babyhelpicon.png",
     "scheme": "myapp",
-    "//userInterfaceStyle": "automatic",
+    
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
