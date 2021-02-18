@@ -23,7 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/babyhelpicon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "io.github.babyhelp",
