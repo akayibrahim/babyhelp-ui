@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 60,
     padding: 5,
-    top: 10,    
+    top: 10,
   },
   detail: {
     fontSize: 15,
