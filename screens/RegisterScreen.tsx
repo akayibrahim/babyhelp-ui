@@ -221,6 +221,7 @@ export default function RegisterScreen(props: any) {
               onChange={(event, date) => {
                 setBirthDate(Moment(date).format('YYYY-MM-DD'));
               }}
+              maximumDate={new Date(Moment(new Date()).format('YYYY-MM-DD'))}
               textColor= "#000"
               locale={language==="TR"?"tr-TR":"en-EN"}
               style={{width: '100%', height: 180, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 0, color: color,
@@ -241,6 +242,7 @@ export default function RegisterScreen(props: any) {
                   onFocus();
                 }
               }}
+              maximumDate={new Date(Moment(new Date()).format('YYYY-MM-DD'))}
               textColor= "#000"
               locale={language==="TR"?"tr-TR":"en-EN"}
               style={{width: '100%', height: 180, backgroundColor: colorScheme === 'dark' ? 'black' : "white", borderWidth: 1,  color: color, 
