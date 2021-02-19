@@ -3,6 +3,10 @@
     package="com.airbnb.android.react.maps.example">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission tools:node="remove" android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission tools:node="remove" android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission tools:node="remove" android:name="android.permission.CAMERA" />
+    <uses-permission tools:node="remove" android:name="android.permission.READ_CONTACTS" />
     
     <application
       android:name=".MainApplication"

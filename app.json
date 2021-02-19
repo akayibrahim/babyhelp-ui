@@ -27,7 +27,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "io.github.babyhelp",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": ["INTERNET"]
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
