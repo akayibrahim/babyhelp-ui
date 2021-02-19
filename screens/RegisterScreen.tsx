@@ -15,7 +15,7 @@ const ip = ipAddress();
 
 export default function RegisterScreen(props: any) {
   const { updateMode, emailP, sexP, nameP, birthDateP, languageP } = props;
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("mail");
   const [sex, setSex] = useState("MALE");
   const [name, setName] = useState();
   const [birthDate, setBirthDate] = useState();
@@ -24,7 +24,8 @@ export default function RegisterScreen(props: any) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [pickDate, setPickDate] = useState(false);
   const [colorText, setColorText] = useState();
-  const [isWarmVisible, setWarmVisible] = useState(false);
+  const [isWarmVisible, setWarmVisible] = useState(false);  
+  const logoutFlag = false;
 
   const options = [
     { label: "MALE", value: "MALE" },
@@ -135,14 +136,15 @@ export default function RegisterScreen(props: any) {
   return (    
       <View style={styles.container}>        
         <Image source={require('../assets/images/babyhelpicon.png')} style={styles.image}/>
+        {false && 
         <TextInput
-          style={[styles.input, {color: colorText}]}
-          placeholder={language==="TR"?"Mail":'Email'}
-          value={email}
-          autoCapitalize="none"
-          placeholderTextColor={colorText}
-          onChangeText={val => setEmail(val)}
-        />
+        style={[styles.input, {color: colorText}]}
+        placeholder={language==="TR"?"Mail":'Email'}
+        value={email}
+        autoCapitalize="none"
+        placeholderTextColor={colorText}
+        onChangeText={val => setEmail(val)}
+        />}
         <TextInput
           style={[styles.input, {color: colorText}]}
           placeholder={language==="TR"?"İsim":'Name'}
@@ -188,7 +190,7 @@ export default function RegisterScreen(props: any) {
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '40%', height: 40, borderRadius: 8, top: '1%', }} onPress={registerOrUpdate}>
           <Text style={{ fontSize: 18, color: colorText, textAlign: 'center', top: 8, }}>{updateMode === "true" ? language==="TR"?'Güncelle':'Update' : language==="TR"?'Kayıt Ol':'Register'}</Text>
         </TouchableOpacity>
-        {updateMode === "true" && false && 
+        {updateMode === "true" && logoutFlag && 
         <TouchableOpacity style={{ borderWidth: 1, borderColor: color, width: '20%', height: 40, borderRadius: 8, top: '5%' }} onPress={logout}>
           <Text style={{ fontSize: 18, color: colorText, textAlign: 'center', top: 8, }}>{language==="TR"?'Çıkış':'Logout'}</Text>
         </TouchableOpacity>
