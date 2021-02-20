@@ -18,22 +18,36 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorOfHeader = headerColor();  
+  const [updated, setUpdated] = useState(false);
+  const [reRenderCount, setReRenderCount] = useState(0);
 
-  return (
+  useEffect(() => {
+    setReRenderCount(reRenderCount+1);
+    console.log(reRenderCount);
+  }, [updated]);
+
+  const reRender = () => {
+    setUpdated(!updated);
+    console.log("call");
+  }
+
+  return (    
     <BottomTab.Navigator
       initialRouteName="TabOne"
       tabBarOptions={{ activeTintColor: "white", inactiveTintColor: "black", style:{ backgroundColor: colorOfHeader, 
         shadowColor: "#000000", shadowOpacity: 1, shadowRadius: 30, shadowOffset: { height: 10, width: 10 }, elevation: 5 }, showLabel: false, }}>
       <BottomTab.Screen
         name="TabOne"
-        component={TabOneNavigator}
+        //component={TabOneNavigator}
+        children={()=><TabOneNavigator reRenderCount={reRenderCount} />}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="book-outline" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={TabTwoNavigator}
+        //component={TabTwoNavigator}
+        children={()=><TabTwoNavigator reRender={reRender} />}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="newspaper-outline" color={color} />,          
         }}
@@ -139,7 +153,7 @@ function TabOneNavigator(props:any) {
 
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
-function TabTwoNavigator() {
+function TabTwoNavigator(props:any) {
   const [language, setLanguage] = useState();
   const colorScheme = useColorScheme();
   useEffect(() => {
@@ -166,7 +180,8 @@ function TabTwoNavigator() {
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name=" "
-        component={TabTwoScreen}
+        //component={TabTwoScreen}
+        children={()=><TabTwoScreen reRender={ props.reRender } />}
         options={{ headerTitle: language==="TR"?"Profil":'PROFILE', headerStyle: { backgroundColor: colorScheme === 'dark' ? '#000' : '#fff', } }}
       />
     </TabTwoStack.Navigator>

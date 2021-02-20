@@ -80,8 +80,9 @@ export default function RegisterScreen(props: any) {
           };
           fetch(ip + '/api/v1/updateUser', requestOptions).then((response) => response.json()).then((data) => {            
             setModalVisible(true);
+            props.reRender();
             setTimeout(() => {
-              setModalVisible(false);
+              setModalVisible(false);              
             }, 3000);
           }).catch((error) => {
               console.error(error);
