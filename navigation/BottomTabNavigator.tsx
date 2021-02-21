@@ -22,13 +22,11 @@ export default function BottomTabNavigator() {
   const [reRenderCount, setReRenderCount] = useState(0);
 
   useEffect(() => {
-    setReRenderCount(reRenderCount+1);
-    console.log(reRenderCount);
+    setReRenderCount(reRenderCount+1);    
   }, [updated]);
 
   const reRender = () => {
-    setUpdated(!updated);
-    console.log("call");
+    setUpdated(!updated);    
   }
 
   return (    
@@ -115,7 +113,7 @@ function TabOneNavigator(props:any) {
       }
     }
     getWeeks();    
-  }, []);
+  }, [props.reRenderCount]);
 
   return (
     <TabOneStack.Navigator>
