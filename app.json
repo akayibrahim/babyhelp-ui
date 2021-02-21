@@ -28,7 +28,8 @@
       },
       "package": "io.github.babyhelp",
       "versionCode": 1,
-      "permissions": ["INTERNET"]
+      "permissions": ["INTERNET"],
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
