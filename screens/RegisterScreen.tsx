@@ -254,8 +254,8 @@ export default function RegisterScreen(props: any) {
           isVisible={isWarmVisible}
           onBackdropPress={closeWarm}
           style={{alignItems: "center"}}>
-          <View style={{borderRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.3, width: '80%', padding: '4%', alignItems: "center", justifyContent: "center"}}>
-            <Ionicons size={30} style={{ bottom: 10 }} name="alert-circle-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
+          <View style={{borderRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.34, width: '95%', padding: '4%', alignItems: "center", justifyContent: "center"}}>
+            <Ionicons size={30} style={{ bottom: 15 }} name="alert-circle-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
             <Text style={{fontWeight:"bold", bottom: 10}}>{language==="TR"?
             "Bu uygulamada paylaşılan bilgiler genel olup bebeğinizin içinden geçeceği büyüme konuları ile ilgili yardımcı bilgi içermektedir. Her bebeğin büyümesi kendine özel olması sebebi ile en doğru bilgiyi doktorunuzdan alabilirsiniz"
             :
