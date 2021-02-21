@@ -210,7 +210,7 @@ export default function RegisterScreen(props: any) {
           <Modal 
           isVisible={pickDate}
           style={styles.modal}>
-          <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex: 0.28, padding: '10%'}}>
+          <View style={{borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex: 0.28, padding: '10%'}}>
             <View style={{position: "absolute", right: 30, top: 5}}>
               <Button title={language==="TR"?"Bitti":"Done"} onPress={() => onFocus()}></Button>
             </View>
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '65%',
-    height: '30%',
+    height: '35%',
     bottom: '0%'
   },
   modal: {

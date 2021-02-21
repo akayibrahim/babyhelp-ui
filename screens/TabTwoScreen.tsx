@@ -75,7 +75,7 @@ export default function TabTwoScreen(props:any) {
         propagateSwipe={true}
         style={styles.modal}
       >         
-        <View style={{borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.88, padding: '8%'}}>
+        <View style={{borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.88, padding: '8%'}}>
           <TouchableOpacity onPress = { () => toggleModal()} style={{zIndex: 1}}>
             <View style={{ width: 80, height: 50, position: "absolute", right: -15, borderWidth: 0, top: -15, backgroundColor: colorScheme === 'dark' ? "black" : 'white' }} >
               <Ionicons size={32} style={{right: 0, position: "absolute"}} name="close-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
