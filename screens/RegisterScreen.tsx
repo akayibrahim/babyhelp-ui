@@ -193,7 +193,8 @@ export default function RegisterScreen(props: any) {
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
     } else {
-      alert('Must use physical device for Push Notifications');
+      // alert('Must use physical device for Push Notifications');
+      console.log('Must use physical device for Push Notifications');
     }
   
     if (Platform.OS === 'android') {
@@ -328,14 +329,14 @@ export default function RegisterScreen(props: any) {
           isVisible={isWarmVisible}
           onBackdropPress={closeWarm}
           style={{alignItems: "center"}}>
-          <View style={{borderRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', flex:0.34, width: '95%', padding: '4%', alignItems: "center", justifyContent: "center"}}>
-            <Ionicons size={30} style={{ bottom: 15 }} name="alert-circle-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
-            <Text style={{fontWeight:"bold", bottom: 10}}>{language==="TR"?
+          <View style={{borderRadius: 15, backgroundColor: colorScheme === 'dark' ? "black" : 'white', width: '95%', padding: '4%', alignItems: "center", }}>
+            <Ionicons size={30} style={{ top:3, }} name="alert-circle-outline" color={colorScheme === 'dark' ? "white" : 'black'} />
+            <Text style={{top: 5}}>{language==="TR"?
             "Bu uygulamada paylaşılan bilgiler genel olup bebeğinizin içinden geçeceği büyüme konuları ile ilgili yardımcı bilgi içermektedir. Her bebeğin büyümesi kendine özel olması sebebi ile en doğru bilgiyi doktorunuzdan alabilirsiniz"
             :
             "The information shared in this application is general and contains helpful information about the growth content your baby will be contaminated. Since each baby's growth is unique, please contact your doctor."}</Text>
             <View style={styles.separatorWarm} lightColor="#eee" darkColor={colorScheme === 'dark' ? "white" : "rgba(255,255,255,0.1)"} />
-            <View style={{width: 120, top: '2%'}}>
+            <View style={{width: 120, top: 12}}>
               <Button title={language==="TR"?"Tamam":"OK"} onPress={() => closeWarm()}></Button>
             </View>            
           </View>
@@ -377,9 +378,10 @@ const styles = StyleSheet.create({
     left: '-20%'
   },
   separatorWarm: {
-    marginVertical: 2,
+    marginVertical: 3,
     height: 1,
     width: '100%',
     left: '0%',
+    top:15
   },
 })
