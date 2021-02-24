@@ -28,7 +28,7 @@
       },
       "package": "io.github.babyhelp",
       "versionCode": 2,
-      "permissions": ["INTERNET"],
+      "permissions": ["INTERNET", "BILLING"],
       "useNextNotificationsApi": true
     },
     "web": {
