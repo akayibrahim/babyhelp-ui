@@ -27,8 +27,9 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "io.github.babyhelp",
-      "versionCode": 2,
-      "permissions": ["INTERNET", "BILLING"],
+      "versionCode": 4,
+      "permissions": ["INTERNET", "com.android.vending.BILLING"],
+      "vendings": ["BILLING"],
       "useNextNotificationsApi": true
     },
     "web": {
