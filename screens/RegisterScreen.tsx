@@ -364,8 +364,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '65%',
-    height: '35%',
-    bottom: '0%'
+    height: '40%',
+    bottom: '0%',    
   },
   modal: {
     justifyContent: 'flex-end',
